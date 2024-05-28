@@ -13,6 +13,8 @@ in
   users.users.georg = {
     isNormalUser = true;
     description = "georg";
+    password = "123456";
+    initialPassword  = "123456";
     extraGroups = ["networkmanager" "wheel"];
     openssh.authorizedKeys.keys = [
       "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQDV6aIIziZjqSeC3EZpW711edxHm/pSCQ/bZEmdbxyHHuM90SgUQA7EOUzXeTdQYhD1FIGp/p0T2U/xbGehFM1YeW/7H+F3+Yug2OrCbV2ZxH14f1e4keYd1IMqJLBxUehY+kvmc5Y3tY4ZxLGkC0fiffRJPdIuiyfZsbnzBoVzqp8AyEClfTCzXNbXCSSg983Y1kIL2R4G6Lc6r445HjsOF6qFHV6tb4IGuaP4t5Dd3p6uERF2Rm3tgsaFgjsXRBXkZp406Y1abTuImTNpSVD0oTAju7XcBI3iASDdqLlLTlVYVfCIrmG3POZ6R2jShkj/CqKPWiWpYZzdgs1MhXPTOFbIAFYrMJM9+MXKzv0r8vYIBe7x+OEuXQzzafbZFGfiNwlLq/rxhxKFVxxJcJWnAplRNMp1od8wa46e/yLu9Pr0Y5Om4EcqjWHDJzg++/4cQ85w50gSkx8bVMSVTuRMEBpXOhhXWUEgxF6dJkoIhNWXgtRXP/5rhE7rqP43ZCc= georg@desktop"
@@ -86,6 +88,7 @@ in
 
   security.sudo.wheelNeedsPassword = true;
   security.pam.enableSSHAgentAuth = true;
+  security.pam.services.sudo.sshAgentAuth = true;
 
   # List packages installed in system profile. To search, run:
   # $ nix search wget
