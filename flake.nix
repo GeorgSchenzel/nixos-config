@@ -52,6 +52,19 @@
           inherit inputs;
         };
       };
+
+      lab-home = nixpkgs.lib.nixosSystem {
+        system = "x86_64-linux";
+
+        modules = [
+          # This fixes nixpkgs (for e.g. "nix shell") to match the system nixpkgs
+          #({ config, pkgs, options, ... }: { nix.registry.nixpkgs.flake = nixpkgs; })
+          ./hosts/lab-home
+        ];
+        specialArgs = {
+          inherit inputs;
+        };
+      };
     };
   };
 }
