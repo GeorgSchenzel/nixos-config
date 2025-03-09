@@ -39,6 +39,8 @@ in
 
   # Set your time zone.
   time.timeZone = "Europe/Vienna";
+  services.xserver.xkb.layout = "de";
+  services.xserver.layout = "de";
 
   # Select internationalisation properties.
   i18n.defaultLocale = "en_US.UTF-8";
@@ -50,7 +52,7 @@ in
 
       # normal fonts
       noto-fonts
-      noto-fonts-cjk
+      noto-fonts-cjk-sans
       noto-fonts-emoji
 
       # nerdfonts
@@ -101,5 +103,7 @@ in
     lm_sensors # for `sensors` command
     neofetch
     ranger
+    vscode
+    firefox
   ];
 }

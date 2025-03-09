@@ -1,6 +1,6 @@
 {
   inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-23.11";
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-24.11";
     
     disko = {
       url = "github:nix-community/disko";
@@ -38,6 +38,19 @@
             home-manager.users.georg = import ./home;
           }
         ];
+      };
+      
+      desktop = nixpkgs.lib.nixosSystem {
+        system = "x86_64-linux";
+
+        modules = [
+          # This fixes nixpkgs (for e.g. "nix shell") to match the system nixpkgs
+          #({ config, pkgs, options, ... }: { nix.registry.nixpkgs.flake = nixpkgs; })
+          ./hosts/desktop
+        ];
+        specialArgs = {
+          inherit inputs;
+        };
       };
 
       lab-garden = nixpkgs.lib.nixosSystem {

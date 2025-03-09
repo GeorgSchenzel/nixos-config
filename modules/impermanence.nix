@@ -6,34 +6,28 @@
 {
   imports = [inputs.impermanence.nixosModules.impermanence];
 
-  #fileSystems."/" = {
-  #  device = "/dev/disk/by-label/main-disk";
-  #  fsType = "btrfs";
-  #  options = [ "subvol=root" ];
-  #};
-
   boot.initrd.postDeviceCommands = lib.mkAfter ''
     mkdir /tmp/btrfs -p
     mount /dev/disk/by-label/main-disk /tmp/btrfs
-    if [[ -e /tmp/btrfs/@ ]]; then
-        mkdir -p /tmp/btrfs/old_roots
-        timestamp=$(date --date="@$(stat -c %Y /tmp/btrfs/@)" "+%Y-%m-%-d_%H:%M:%S")
-        mv /tmp/btrfs/@ "/tmp/btrfs/old_roots/$timestamp"
+    if [[ -e /tmp/btrfs/nixos/@root ]]; then
+        mkdir -p /tmp/btrfs/nixos/old_roots
+        timestamp=$(date --date="@$(stat -c %Y /tmp/btrfs/nixos/@root)" "+%Y-%m-%-d_%H:%M:%S")
+        mv /tmp/btrfs/nixos/@root "/tmp/btrfs/nixos/old_roots/$timestamp"
     fi
 
     delete_subvolume_recursively() {
         IFS=$'\n'
         for i in $(btrfs subvolume list -o "$1" | cut -f 9- -d ' '); do
-            delete_subvolume_recursively "/tmp/btrfs/$i"
+            delete_subvolume_recursively "/tmp/btrfs/nixos/$i"
         done
         btrfs subvolume delete "$1"
     }
 
-    for i in $(find /tmp/btrfs/old_roots/ -maxdepth 1 -mtime +30); do
+    for i in $(find /tmp/btrfs/nixos/old_roots/ -maxdepth 1 -mtime +30); do
         delete_subvolume_recursively "$i"
     done
 
-    btrfs subvolume create /tmp/btrfs/@
+    btrfs subvolume create /tmp/btrfs/nixos/@root
     umount /tmp/btrfs
   '';
 
@@ -57,7 +51,7 @@
       "/etc/ssh/ssh_host_rsa_key"
       "/etc/ssh/ssh_host_rsa_key.pub"
 
-      { file = "/var/keys/secret_file"; parentDirectory = { mode = "u=rwx,g=,o="; }; }
+      #{ file = "/var/keys/secret_file"; parentDirectory = { mode = "u=rwx,g=,o="; }; }
     ];
   };
   
@@ -66,7 +60,16 @@
   environment.persistence."/persistent/server" = {
     hideMounts = true;
     directories = [
-      "/srv"
+      
+    ];
+  };
+
+  fileSystems."/persistent/home".neededForBoot = true;
+
+  environment.persistence."/persistent/home" = {
+    hideMounts = true;
+    directories = [
+      
     ];
   };
 }

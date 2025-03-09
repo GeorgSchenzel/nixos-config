@@ -9,7 +9,7 @@
     disk = {
       main = {
         type = "disk";
-        device = "/dev/sda";
+        device = "/dev/nvme0n1";
         content = {
           type = "gpt";
           partitions = {
@@ -33,28 +33,37 @@
                   "--label main-disk"
                 ]; # Override existing partition
                 subvolumes = {
-                  "@" = {
+                  "nixos/@root" = {
                     mountpoint = "/";
-                    mountOptions = [ "compress=zstd:1" "noatime" ];
+                    mountOptions = [ "compress=zstd" "noatime" ];
                   };
-                  "@nix" = {
+                  "nixos/@nix" = {
                     mountpoint = "/nix";
-                    mountOptions = [ "compress=zstd:1" "noatime" ];
+                    mountOptions = [ "compress=zstd" "noatime" ];
                   };
-                  "@persistent" = {
+                  "nixos/@home" = {
+                    mountpoint = "/home";
+                    mountOptions = [ "compress=zstd" ];
+                  };
+                  "nixos/@persistent" = {
                     mountpoint = "/persistent";
-                    mountOptions = [ "compress=zstd:1" "noatime" ];
+                    mountOptions = [ "compress=zstd" "noatime" ];
                   };
-                  "@persistent/system" = {
+                  "nixos/@persistent/system" = {
                     mountpoint = "/persistent/system";
-                    mountOptions = [ "compress=zstd:1" "noatime" ];
+                    mountOptions = [ "compress=zstd" "noatime" ];
                   };
-                  "@persistent/server" = {
+                  "nixos/@persistent/server" = {
                     mountpoint = "/persistent/server";
-                    mountOptions = [ "compress=zstd:1" "noatime" ];
+                    mountOptions = [ "compress=zstd" "noatime" ];
+                  };
+                  "nixos/@persistent/home" = {
+                    mountpoint = "/persistent/home";
+                    mountOptions = [ "compress=zstd" ];
                   };
                   "@swap" = {
                     mountpoint = "/.swapvol";
+                    mountOptions = [ "compress=zstd" "noatime" ];
                     swap = {
                       swapfile.size = "8G";
                     };
