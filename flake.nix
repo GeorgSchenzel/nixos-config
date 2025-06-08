@@ -51,7 +51,7 @@
           {
             home-manager.useGlobalPkgs = true;
             home-manager.useUserPackages = true;
-            home-manager.users.jdoe = import .hosts/desktop/home.nix;
+            home-manager.users.georg = import ./home/georg.nix;
 
             # Optionally, use home-manager.extraSpecialArgs to pass
             # arguments to home.nix

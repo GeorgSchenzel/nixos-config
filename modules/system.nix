@@ -55,8 +55,11 @@ in
       noto-fonts-cjk-sans
       noto-fonts-emoji
 
+      font-awesome
+
       # nerdfonts
-      (nerdfonts.override {fonts = ["FiraCode" "JetBrainsMono"];})
+      nerd-fonts.fira-code
+      nerd-fonts.jetbrains-mono
     ];
 
     # use fonts specified by user rather than default ones
