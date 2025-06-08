@@ -1,6 +1,6 @@
 {
   inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-24.11";
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-25.05";
     
     disko = {
       url = "github:nix-community/disko";
@@ -35,7 +35,7 @@
             home-manager.useUserPackages = true;
 
             home-manager.extraSpecialArgs = inputs;
-            home-manager.users.georg = import ./home;
+            home-manager.users.georg =  ./home/georg.nix;
           }
         ];
       };
@@ -47,6 +47,15 @@
           # This fixes nixpkgs (for e.g. "nix shell") to match the system nixpkgs
           #({ config, pkgs, options, ... }: { nix.registry.nixpkgs.flake = nixpkgs; })
           ./hosts/desktop
+          home-manager.nixosModules.home-manager
+          {
+            home-manager.useGlobalPkgs = true;
+            home-manager.useUserPackages = true;
+            home-manager.users.jdoe = import .hosts/desktop/home.nix;
+
+            # Optionally, use home-manager.extraSpecialArgs to pass
+            # arguments to home.nix
+          }
         ];
         specialArgs = {
           inherit inputs;
