@@ -3,7 +3,7 @@
   ...
 }:
 {
-  flake.modules.nixos.desktop = {
+  flake.modules.nixos.vm-full = {
     imports = with inputs.self.modules.nixos; [
       system-cli
       disko
@@ -12,7 +12,7 @@
     disko.devices = {
       disk.main = {
         type = "disk";
-        device = "/dev/nvme0n1";
+        device = "/dev/vda";
         content = {
           type = "gpt";
           partitions = {
@@ -68,8 +68,10 @@
 
     boot.loader.grub = {
       enable = true;
-      devices = [ "/dev/nvme0n1" ];
+      devices = [ "/dev/vda" ];
     };
+
+    virtualisation.diskSize = 20000;
 
     users.users.georg = {
       isNormalUser = true;
