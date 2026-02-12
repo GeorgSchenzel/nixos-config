@@ -4,8 +4,9 @@
 }:
 {
   flake.modules.nixos.desktop = {
-    imports = with inputs.self.modules.nixos; [ system-cli ]
-      ++ [ (inputs.self.factory.disko-btrfs "/dev/nvme0n1") ];
+    imports = with inputs.self.modules.nixos; [ 
+      system-cli
+    ];
 
     users.users.georg = {
       isNormalUser = true;

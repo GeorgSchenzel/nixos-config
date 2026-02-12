@@ -58,9 +58,14 @@ nix flake update
 
 # Build VM
 nix build .#nixosConfigurations.desktop.config.system.build.vm
-
 # Start VM
-./result/bin/run-nixos-vm 
+./result/bin/run-nixos-vm
+
+# Build VM with disko
+nix build .#nixosConfigurations.desktop.config.system.build.vmWithDisko
+# Start VM
+./result/bin/disko-vm
+
 ```
 
 ## Key Pattern References

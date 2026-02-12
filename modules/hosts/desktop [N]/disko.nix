@@ -1,16 +1,16 @@
 {
   inputs,
-  lib,
   ...
 }:
 {
-  flake.factory.disko-btrfs = device: {
+  flake.modules.nixos.desktop = {
+    
     imports = [ inputs.disko.nixosModules.disko ];
 
     disko.devices = {
       disk.main = {
         type = "disk";
-        device = device;
+        device = /dev/nvme0n1;
         content = {
           type = "gpt";
           partitions = {
@@ -62,11 +62,7 @@
           };
         };
       };
-    };
-
-    boot.loader.grub = {
-      enable = true;
-      devices = [ device ];
-    };
+    }; 
   };
 }
+
