@@ -8,6 +8,13 @@
       system-cli
     ];
 
+    users.users.georg = {
+      isNormalUser = true;
+      description = "Georg";
+      extraGroups = [ "wheel" ];
+      password = "password";
+    };
+
     fileSystems."/" = {
       device = "/dev/disk/by-label/nixos";
       fsType = "ext4";

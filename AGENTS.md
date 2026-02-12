@@ -55,6 +55,12 @@ nix flake check
 
 # Update flake inputs
 nix flake update
+
+# Build VM
+nix build .#nixosConfigurations.desktop.config.system.build.vm
+
+# Start VM
+./result/bin/run-nixos-vm 
 ```
 
 ## Key Pattern References
