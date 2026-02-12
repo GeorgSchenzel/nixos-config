@@ -16,6 +16,8 @@
         systemConstants
         pkgs-by-name
       ]);
+
+      console.keyMap = "de";
   };
 
   flake.modules.darwin.system-default = {
@@ -29,6 +31,8 @@
         systemConstants
         pkgs-by-name
       ]);
+
+      console.keyMap = "de";
   };
 
   flake.modules.homeManager.system-default = {
