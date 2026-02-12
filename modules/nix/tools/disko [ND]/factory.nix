@@ -27,36 +27,36 @@
             root = {
               size = "100%";
               content = {
-                type = "btrfs";
-                subvolumes = {
-                  "/" = {
-                    mountpoint = "/";
+                  type = "btrfs";
+                  subvolumes = {
+                    "@" = {
+                      mountpoint = "/";
+                    };
+                    "@home" = {
+                      mountpoint = "/home";
+                      mountOptions = [ "compress=zstd" ];
+                    };
+                    "@nix" = {
+                      mountpoint = "/nix";
+                      mountOptions = [ "compress=zstd" "noatime" ];
+                    };
+                    "@persist" = {
+                      mountpoint = "/persist";
+                      mountOptions = [ "compress=zstd" ];
+                    };
+                    "@log" = {
+                      mountpoint = "/var/log";
+                      mountOptions = [ "compress=zstd" ];
+                    };
+                    "@tmp" = {
+                      mountpoint = "/tmp";
+                      mountOptions = [ "compress=zstd" ];
+                    };
+                    "@swap" = {
+                      mountpoint = "/swap";
+                      swap.swapfile.size = "4G";
+                    };
                   };
-                  "/home" = {
-                    mountpoint = "/home";
-                    mountOptions = [ "compress=zstd" ];
-                  };
-                  "/nix" = {
-                    mountpoint = "/nix";
-                    mountOptions = [ "compress=zstd" "noatime" ];
-                  };
-                  "/persist" = {
-                    mountpoint = "/persist";
-                    mountOptions = [ "compress=zstd" ];
-                  };
-                  "/log" = {
-                    mountpoint = "/var/log";
-                    mountOptions = [ "compress=zstd" ];
-                  };
-                  "/tmp" = {
-                    mountpoint = "/tmp";
-                    mountOptions = [ "compress=zstd" ];
-                  };
-                  "/swap" = {
-                    mountpoint = "/swap";
-                    swap.swapfile.size = "4G";
-                  };
-                };
               };
             };
           };
