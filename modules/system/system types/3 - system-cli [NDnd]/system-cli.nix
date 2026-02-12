@@ -13,6 +13,10 @@
       firmware
       cli-tools
     ];
+
+    home-manager.sharedModules = [
+      inputs.self.modules.homeManager.system-cli
+    ];
   };
 
   flake.modules.darwin.system-cli = {
@@ -21,6 +25,10 @@
 
       ssh
       cli-tools
+    ];
+
+    home-manager.sharedModules = [
+      inputs.self.modules.homeManager.system-cli
     ];
   };
 

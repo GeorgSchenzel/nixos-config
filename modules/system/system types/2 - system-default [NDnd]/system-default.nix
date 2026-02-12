@@ -17,7 +17,11 @@
         pkgs-by-name
       ]);
 
-      console.keyMap = "de";
+    home-manager.sharedModules = [
+      inputs.self.modules.homeManager.system-default
+    ];
+
+    console.keyMap = "de";
   };
 
   flake.modules.darwin.system-default = {
@@ -32,7 +36,11 @@
         pkgs-by-name
       ]);
 
-      console.keyMap = "de";
+    home-manager.sharedModules = [
+      inputs.self.modules.homeManager.system-default
+    ];
+
+    console.keyMap = "de";
   };
 
   flake.modules.homeManager.system-default = {

@@ -18,6 +18,7 @@ in
       isNormalUser = true;
       home = "/home/georg";
       extraGroups = [ "wheel" ];
+      createHome = true;
     };
   };
 
