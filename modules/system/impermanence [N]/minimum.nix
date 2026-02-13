@@ -1,12 +1,6 @@
-{ inputs, ... }:
+{ ... }:
 {
-  flake.modules.nixos.impermanence = { config, ... }: {
-    fileSystems."/persist".neededForBoot = true;
-
-    virtualisation.vmVariantWithDisko = {
-      virtualisation.fileSystems."/persist".neededForBoot = true;
-    };
-
+  flake.modules.nixos.impermanence = {
     environment.persistence."/persist" = {
       hideMounts = true;
       directories = [
