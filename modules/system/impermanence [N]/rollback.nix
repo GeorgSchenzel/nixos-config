@@ -21,15 +21,20 @@
           mkdir /btrfs_tmp
           mount -t btrfs ${config.systemConstants.btrfsPartition} /btrfs_tmp
 
-          # Delete nested subvolumes first
+          # Delete nested subvolumes first (root)
           btrfs subvolume list -o /btrfs_tmp/@ | cut -f9 -d' ' | while read subvolume; do
+            btrfs subvolume delete "/btrfs_tmp/$subvolume"
+          done
+
+          # Delete nested subvolumes first (home)
+          btrfs subvolume list -o /btrfs_tmp/@home | cut -f9 -d' ' | while read subvolume; do
             btrfs subvolume delete "/btrfs_tmp/$subvolume"
           done
 
           if [[ -e /btrfs_tmp/@ ]]; then
             mkdir -p /btrfs_tmp/old_roots
             timestamp=$(date --date="@$(stat -c %Y /btrfs_tmp/@)" "+%Y-%m-%-d_%H:%M:%S")
-            btrfs subvolume delete /btrfs_tmp/@
+            mv /btrfs_tmp/@ "/btrfs_tmp/old_roots/$timestamp"
           fi
 
           delete_subvolume_recursively() {
@@ -45,6 +50,14 @@
           done
 
           btrfs subvolume create /btrfs_tmp/@
+
+          if [[ -e /btrfs_tmp/@home ]]; then
+            mkdir -p /btrfs_tmp/old_roots
+            timestamp=$(date --date="@$(stat -c %Y /btrfs_tmp/@home)" "+%Y-%m-%-d_%H:%M:%S")
+            mv /btrfs_tmp/@home "/btrfs_tmp/old_roots/$timestamp-home"
+          fi
+
+          btrfs subvolume create /btrfs_tmp/@home
           umount /btrfs_tmp
         '';
       };
