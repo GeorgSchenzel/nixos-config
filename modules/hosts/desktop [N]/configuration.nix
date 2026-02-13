@@ -8,6 +8,7 @@
       systemd-boot
       georg
       system-cli
+      impermanence
     ];
   };
 }
