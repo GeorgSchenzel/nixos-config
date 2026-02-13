@@ -6,6 +6,10 @@
   # Setup of tools for dendritic pattern
 
   flake-file.inputs = {
+    disko = {
+      inputs.nixpkgs.follows = "nixpkgs";
+      url = "github:nix-community/disko";
+    };
     flake-parts.url = "github:hercules-ci/flake-parts";
     flake-file.url = "github:vic/flake-file";
     import-tree.url = "github:vic/import-tree";
