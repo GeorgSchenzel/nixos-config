@@ -7,6 +7,7 @@
       georg
       system-cli
       impermanence
+      sway
     ];
 
     systemConstants = {
