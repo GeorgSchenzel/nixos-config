@@ -9,7 +9,6 @@
     imports = with inputs.self.modules.nixos; [
       system-default
 
-      ssh
       firmware
       cli-tools
     ];
@@ -23,7 +22,6 @@
     imports = with inputs.self.modules.darwin; [
       system-default
 
-      ssh
       cli-tools
     ];
 

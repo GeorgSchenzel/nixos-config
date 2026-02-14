@@ -4,15 +4,10 @@
       enable = true;
       openFirewall = true;
       settings = {
-        PasswordAuthentication = true;
-        PermitRootLogin = "yes";
+        PasswordAuthentication = false;
+        PermitRootLogin = "no";
+        KbdInteractiveAuthentication = false;
       };
-    };
-  };
-
-  flake.modules.darwin.ssh = {
-    services.openssh = {
-      enable = true;
     };
   };
 }

@@ -66,6 +66,9 @@ nix build .#nixosConfigurations.desktop.config.system.build.vmWithDisko
 # Start VM
 ./result/bin/disko-vm
 
+# Upload host ssh to vm to debug
+cat ~/.ssh/id_ed25519 | ssh -p 2222 georg@localhost "sudo tee /etc/ssh/ssh_host_ed25519_key > /dev/null && sudo chmod 600 /etc/ssh/ssh_host_ed25519_key"
+cat ~/.ssh/id_ed25519.pub | ssh -p 2222 georg@localhost "sudo tee /etc/ssh/ssh_host_ed25519_key.pub > /dev/null && sudo chmod 644 /etc/ssh/ssh_host_ed25519_key.pub"
 ```
 
 ## Key Pattern References
