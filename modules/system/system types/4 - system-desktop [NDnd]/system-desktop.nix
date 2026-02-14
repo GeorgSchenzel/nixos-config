@@ -10,12 +10,20 @@
       system-cli
       desktop-environment
     ];
+
+    home-manager.sharedModules = [
+      inputs.self.modules.homeManager.system-desktop
+    ];
   };
 
   flake.modules.darwin.system-desktop = {
     imports = with inputs.self.modules.darwin; [
       system-cli
       desktop-environment
+    ];
+
+    home-manager.sharedModules = [
+      inputs.self.modules.homeManager.system-desktop
     ];
   };
 

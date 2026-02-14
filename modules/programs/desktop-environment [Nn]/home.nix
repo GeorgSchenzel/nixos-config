@@ -7,10 +7,14 @@
       swaylock
       swayidle
       wl-clipboard
-      rofi
     ];
 
     programs.alacritty.enable = true;
+
+    programs.rofi = {
+      enable = true;
+      package = pkgs.rofi;
+    };
 
     wayland.windowManager.sway = {
       enable = true;
