@@ -3,14 +3,14 @@
 {
   flake.modules.homeManager.sway = { pkgs, ... }: {
     home.packages = with pkgs; [
-      foot
+      alacritty
       swaylock
       swayidle
       wl-clipboard
-      bemenu
+      rofi
     ];
 
-    programs.foot.enable = true;
+    programs.alacritty.enable = true;
 
     wayland.windowManager.sway = {
       enable = true;
@@ -18,13 +18,13 @@
       xwayland = true;
 
       config = rec {
-        modifier = "Mod4";
-        terminal = "foot";
-        menu = "bemenu-run";
+        modifier = "Mod1";
+        terminal = "alacritty";
+        menu = "rofi -show drun";
 
         input = {
           "type:keyboard" = {
-            xkb_layout = "us";
+            xkb_layout = "de";
           };
           "type:touchpad" = {
             tap = "enabled";

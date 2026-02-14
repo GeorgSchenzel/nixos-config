@@ -8,7 +8,11 @@ let
 
   commonConfig = {
     home-manager.users.georg = {
-      imports = [ self.modules.homeManager.georg ];
+      imports = [
+        self.modules.homeManager.georg
+        self.modules.homeManager.desktop-apps
+        self.modules.homeManager.opencode
+      ];
     };
   };
 in

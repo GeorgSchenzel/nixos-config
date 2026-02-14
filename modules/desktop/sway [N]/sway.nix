@@ -43,7 +43,7 @@
       swaylock
       swayidle
       wl-clipboard
-      bemenu
+      rofi
       xdg-utils
       polkit_gnome
     ];

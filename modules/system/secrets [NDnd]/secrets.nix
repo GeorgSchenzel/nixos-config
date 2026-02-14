@@ -15,7 +15,7 @@
       inputs.sops-nix.darwinModules.sops
     ];
     sops = {
-      defaultSopsFile = ./secrets/example.yaml;
+      defaultSopsFile = ../../../secrets/example.yaml;
       age.sshKeyPaths = [ "/etc/ssh/ssh_host_ed25519_key" ];
     };
   };
@@ -24,6 +24,9 @@
     imports = [
       inputs.sops-nix.homeManagerModules.sops
     ];
-    sops.defaultSopsFile = ./secrets/example.yaml;
+    sops = {
+      defaultSopsFile = ../../../secrets/example.yaml;
+      age.sshKeyPaths = [ "/etc/ssh/ssh_host_ed25519_key" ];
+    };
   };
 }

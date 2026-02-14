@@ -69,6 +69,9 @@ nix build .#nixosConfigurations.desktop.config.system.build.vmWithDisko
 # Upload host ssh to vm to debug
 cat ~/.ssh/id_ed25519 | ssh -p 2222 georg@localhost "sudo tee /etc/ssh/ssh_host_ed25519_key > /dev/null && sudo chmod 600 /etc/ssh/ssh_host_ed25519_key"
 cat ~/.ssh/id_ed25519.pub | ssh -p 2222 georg@localhost "sudo tee /etc/ssh/ssh_host_ed25519_key.pub > /dev/null && sudo chmod 644 /etc/ssh/ssh_host_ed25519_key.pub"
+
+cat ~/.ssh/id_ed25519 | ssh -p 2222 georg@localhost "tee ~/.ssh/id_ed25519 > /dev/null"
+cat ~/.ssh/id_ed25519.pub | ssh -p 2222 georg@localhost "tee ~/.ssh/id_ed25519.pub > /dev/null"
 ```
 
 ## Key Pattern References
