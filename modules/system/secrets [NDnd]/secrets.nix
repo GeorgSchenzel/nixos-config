@@ -20,13 +20,14 @@
     };
   };
 
-  flake.modules.homeManager.secrets = {
+  flake.modules.homeManager.secrets = { config, ...}:
+  {
     imports = [
       inputs.sops-nix.homeManagerModules.sops
     ];
     sops = {
       defaultSopsFile = ../../../secrets/example.yaml;
-      age.sshKeyPaths = [ "/etc/ssh/ssh_host_ed25519_key" ];
+      age.sshKeyPaths = [ "${config.home.homeDirectory}/.ssh/id_ed25519" ];
     };
   };
 }
