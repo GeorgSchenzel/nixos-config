@@ -1,7 +1,7 @@
 { ... }:
 
 {
-  flake.modules.homeManager.sway = { pkgs, ... }: {
+  flake.modules.homeManager.desktop-environment = { pkgs, ... }: {
     home.packages = with pkgs; [ rofi ];
 
     programs.rofi = {

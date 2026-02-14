@@ -1,11 +1,7 @@
 { inputs, ... }:
 
 {
-  flake.modules.nixos.sway = { config, pkgs, ... }: {
-    home-manager.sharedModules = [
-      inputs.self.modules.homeManager.sway
-    ];
-
+  flake.modules.nixos.desktop-environment = { config, pkgs, ... }: {
     nixpkgs.config.allowUnfree = true;
 
     hardware.graphics = {

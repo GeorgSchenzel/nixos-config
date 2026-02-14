@@ -1,7 +1,7 @@
 { inputs, ... }:
 
 {
-  flake.modules.nixos.sway = { config, pkgs, ... }: {
+  flake.modules.nixos.desktop-environment = { config, pkgs, ... }: {
 
     services.greetd = {
         enable = true;
