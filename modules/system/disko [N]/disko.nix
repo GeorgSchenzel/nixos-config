@@ -30,7 +30,9 @@
                   "@" = { mountpoint = "/"; };
                   "@home" = { mountpoint = "/home"; mountOptions = [ "compress=zstd" ]; };
                   "@nix" = { mountpoint = "/nix"; mountOptions = [ "compress=zstd" "noatime" ]; };
-                  "@persist" = { mountpoint = "/persist"; mountOptions = [ "compress=zstd" ]; };
+                  "@persist_home" = { mountpoint = "/persist/home"; mountOptions = [ "compress=zstd" ]; };
+                  "@persist_system" = { mountpoint = "/persist/system"; mountOptions = [ "compress=zstd" ]; };
+                  "@persist_server" = { mountpoint = "/persist/server"; mountOptions = [ "compress=zstd" ]; };
                   "@log" = { mountpoint = "/var/log"; mountOptions = [ "compress=zstd" ]; };
                   "@tmp" = { mountpoint = "/tmp"; mountOptions = [ "compress=zstd" ]; };
                   "@swap" = { mountpoint = "/swap"; mountOptions = [ "nodatacow" ]; swap.swapfile.size = "4G"; };
@@ -43,11 +45,15 @@
     };
 
     fileSystems."/home".neededForBoot = true;
-    fileSystems."/persist".neededForBoot = true;
+    fileSystems."/persist/home".neededForBoot = true;
+    fileSystems."/persist/system".neededForBoot = true;
+    fileSystems."/persist/server".neededForBoot = true;
 
     virtualisation.vmVariantWithDisko = {
       virtualisation.fileSystems."/home".neededForBoot = true;
-      virtualisation.fileSystems."/persist".neededForBoot = true;
+      virtualisation.fileSystems."/persist/home".neededForBoot = true;
+      virtualisation.fileSystems."/persist/system".neededForBoot = true;
+      virtualisation.fileSystems."/persist/server".neededForBoot = true;
     };
   };
 }

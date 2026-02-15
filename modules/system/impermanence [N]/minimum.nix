@@ -1,7 +1,7 @@
 { ... }:
 {
   flake.modules.nixos.impermanence = {
-    environment.persistence."/persist" = {
+    environment.persistence."/persist/system" = {
       hideMounts = true;
       directories = [
         "/var/log"

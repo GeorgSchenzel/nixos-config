@@ -4,7 +4,7 @@
     { config, ... }:
     {
       home = inputs.self.lib.mkIfPersistence config {
-        persistence."/persist".directories = [
+        persistence."/persist/home".directories = [
           ".ssh"
         ];
       };
