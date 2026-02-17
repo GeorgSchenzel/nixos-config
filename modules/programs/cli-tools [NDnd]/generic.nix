@@ -10,14 +10,10 @@ let
 in
 {
   flake.modules.nixos.cli-tools = {
-    imports = [
-      genericPackages
-    ];
+    imports = [ genericPackages ];
   };
 
   flake.modules.darwin.cli-tools = {
-    imports = [
-      genericPackages
-    ];
+    imports = [ genericPackages ];
   };
 }

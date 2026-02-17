@@ -25,12 +25,11 @@
     ];
   };
 
-  flake.modules.homeManager.system-desktop = { pkgs, ... }: {
+  flake.modules.homeManager.system-desktop = { pkgs, lib, ... }: {
     imports = with inputs.self.modules.homeManager; [
       system-cli
       desktop-apps
       opencode
-    ] ++ lib.optionals pkgs.stdenv.isLinux [
       desktop-environment
     ];
   };

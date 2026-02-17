@@ -33,7 +33,7 @@
         system-minimal
         home-manager
         secrets
-        ssh
+        mac-app-util
       ]
       ++ (with inputs.self.modules.generic; [
         systemConstants
@@ -42,9 +42,8 @@
 
     home-manager.sharedModules = [
       inputs.self.modules.homeManager.system-default
+      inputs.self.modules.homeManager.mac-app-util
     ];
-
-    console.keyMap = "de";
   };
 
   flake.modules.homeManager.system-default = {

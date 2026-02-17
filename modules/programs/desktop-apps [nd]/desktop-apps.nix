@@ -1,13 +1,16 @@
 {
-  flake.modules.homeManager.desktop-apps =
-    { pkgs, ... }:
-    {
-      home.packages = with pkgs; [
-        firefox
-        thunderbird
-        vscode
-      ];
+  flake.modules.homeManager.desktop-apps = { lib, pkgs, ... }: {
+    home.packages = with pkgs; [
+      firefox
+      thunderbird
+      vscode
+      obsidian
+      jetbrains.pycharm
+      qbittorrent
+    ] ++ lib.optionals pkgs.stdenv.isDarwin [
+      iina
+    ];
 
-      programs.alacritty.enable = true;
-    };
+    programs.alacritty.enable = true;
+  };
 }

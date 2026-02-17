@@ -3,7 +3,6 @@
 let
   commonUserConfig = {
     description = "Georg";
-    password = "password";
   };
 
   commonConfig = {
@@ -21,6 +20,7 @@ in
       home = "/home/georg";
       extraGroups = [ "wheel" ];
       createHome = true;
+      password = "password";
     };
   };
 
