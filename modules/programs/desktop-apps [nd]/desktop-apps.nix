@@ -7,5 +7,7 @@
         thunderbird
         vscode
       ];
+
+      programs.alacritty.enable = true;
     };
 }

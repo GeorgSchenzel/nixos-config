@@ -1,10 +1,9 @@
 {
   inputs,
+  lib,
   ...
 }:
 {
-  # expansion of cli system for desktop use
-
   flake.modules.nixos.system-desktop = {
     imports = with inputs.self.modules.nixos; [
       system-cli
@@ -19,7 +18,6 @@
   flake.modules.darwin.system-desktop = {
     imports = with inputs.self.modules.darwin; [
       system-cli
-      desktop-environment
     ];
 
     home-manager.sharedModules = [
@@ -27,12 +25,13 @@
     ];
   };
 
-  flake.modules.homeManager.system-desktop = {
+  flake.modules.homeManager.system-desktop = { pkgs, ... }: {
     imports = with inputs.self.modules.homeManager; [
       system-cli
-      desktop-environment
       desktop-apps
       opencode
+    ] ++ lib.optionals pkgs.stdenv.isLinux [
+      desktop-environment
     ];
   };
 }

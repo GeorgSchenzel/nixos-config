@@ -3,13 +3,10 @@
 {
   flake.modules.homeManager.desktop-environment = { pkgs, ... }: {
     home.packages = with pkgs; [
-      alacritty
       swaylock
       swayidle
       wl-clipboard
     ];
-
-    programs.alacritty.enable = true;
 
     programs.rofi = {
       enable = true;
