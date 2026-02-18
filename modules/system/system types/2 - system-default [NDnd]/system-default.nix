@@ -42,7 +42,6 @@
 
     home-manager.sharedModules = [
       inputs.self.modules.homeManager.system-default
-      inputs.self.modules.homeManager.mac-app-util
     ];
   };
 

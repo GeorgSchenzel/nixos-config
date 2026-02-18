@@ -4,10 +4,8 @@
     imports = [
       inputs.mac-app-util.darwinModules.default
     ];
-  };
 
-  flake.modules.homeManager.mac-app-util = {
-    imports = [
+    home-manager.sharedModules = [
       inputs.mac-app-util.homeManagerModules.default
     ];
   };
