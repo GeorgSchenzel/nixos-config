@@ -33,7 +33,6 @@
         system-minimal
         home-manager
         secrets
-        mac-app-util
       ]
       ++ (with inputs.self.modules.generic; [
         systemConstants
@@ -42,6 +41,7 @@
 
     home-manager.sharedModules = [
       inputs.self.modules.homeManager.system-default
+      { targets.darwin.copyApps.enable = true; }
     ];
   };
 
