@@ -2,6 +2,7 @@ keys:
   - &primary_age age10rn2tcgud23gn83cv5y7dazy2p5cggd8n9kgujcy4c5ymj22w5zqyf2vfl
   - &desktop_georg age1p2cqk935u268gzwfjarz242zluxdvh3fhjaz56gadjfxhcgf790q69pxw7
   - &desktop_host age1xpxu7yg8p8yu0zqdw2v05w6l8q0qq4q2uusltfxrdvxzympskvkqh3hg0n
+  - &mbp_georg age1exkxgpvmvjc8gcwtldnlak8ysgf557fmxhmg25dgqwj5tgzfwuksk8u3we
 creation_rules:
   - path_regex: secrets/[^/]+\.(yaml|json|env|ini)$
     key_groups:
@@ -9,3 +10,4 @@ creation_rules:
           - *primary_age
           - *desktop_georg
           - *desktop_host
+          - *mbp_georg
