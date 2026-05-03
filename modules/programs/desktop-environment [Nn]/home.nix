@@ -20,13 +20,16 @@
         xwayland = true;
 
         config = rec {
-          modifier = "Mod1";
+          modifier = "Mod4";
           terminal = "alacritty";
           menu = "rofi -show drun";
 
           input = {
             "type:keyboard" = {
               xkb_layout = "de";
+            };
+            "type:pointer" = {
+              accel_profile = "flat";
             };
             "type:touchpad" = {
               tap = "enabled";
@@ -36,7 +39,15 @@
           };
 
           output = {
-            "*" = {
+            DP-2 = {
+              mode = "3440x1440@100Hz";
+              pos = "0 0";
+              bg = "#1e1e2e solid_color";
+            };
+            HDMI-A-1 = {
+              mode = "1920x1080";
+              pos = "3440 0";
+              transform = "90";
               bg = "#1e1e2e solid_color";
             };
           };
@@ -95,12 +106,18 @@
             "${modifier}+3" = "workspace number 3";
             "${modifier}+4" = "workspace number 4";
             "${modifier}+5" = "workspace number 5";
+            "${modifier}+6" = "workspace number 6";
+            "${modifier}+7" = "workspace number 7";
+            "${modifier}+8" = "workspace number 8";
 
             "${modifier}+Shift+1" = "move container to workspace number 1";
             "${modifier}+Shift+2" = "move container to workspace number 2";
             "${modifier}+Shift+3" = "move container to workspace number 3";
             "${modifier}+Shift+4" = "move container to workspace number 4";
             "${modifier}+Shift+5" = "move container to workspace number 5";
+            "${modifier}+Shift+6" = "move container to workspace number 6";
+            "${modifier}+Shift+7" = "move container to workspace number 7";
+            "${modifier}+Shift+8" = "move container to workspace number 8";
 
             "${modifier}+b" = "splith";
             "${modifier}+v" = "splitv";
@@ -132,6 +149,10 @@
           startup = [
             { command = "dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP=sway"; }
           ];
+
+          workspaceOutputAssign =
+            map (n: { workspace = toString n; output = "DP-2"; }) [ 1 2 3 4 ]
+            ++ map (n: { workspace = toString n; output = "HDMI-A-1"; }) [ 5 6 7 8 ];
         };
       };
 
