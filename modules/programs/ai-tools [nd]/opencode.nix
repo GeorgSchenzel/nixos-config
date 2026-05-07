@@ -4,7 +4,7 @@
 }:
 
 {
-  flake.modules.homeManager.opencode = { config, pkgs, ... }:
+  flake.modules.homeManager.ai-tools = { config, pkgs, ... }:
   let
     opencode = inputs.opencode.packages.${pkgs.stdenv.hostPlatform.system}.default;
   in

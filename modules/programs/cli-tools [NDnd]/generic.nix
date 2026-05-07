@@ -5,6 +5,7 @@ let
       environment.systemPackages = with pkgs; [
         vim
         git
+        ffmpeg
       ];
     };
 in

@@ -43,6 +43,8 @@
         ];
       };
 
+      programs.nix-ld.enable = true;
+
       nix.extraOptions = ''
         warn-dirty = false
         keep-outputs = true
