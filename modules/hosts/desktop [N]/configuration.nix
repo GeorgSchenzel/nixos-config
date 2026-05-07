@@ -5,6 +5,7 @@
       disko
       systemd-boot
       georg
+      system-cli
       system-desktop
       impermanence
     ];
