@@ -29,6 +29,7 @@
               update-props = {
                 priority.driver = 2000
                 priority.session = 2000
+                session.suspend-timeout-seconds = 0
               }
             }
           }
