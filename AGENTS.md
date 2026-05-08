@@ -1,45 +1,45 @@
 # Agents Guide
 
-This repo uses the Dendritic Pattern with flake-parts to structure Nix configurations.
+This repo uses [den](https://github.com/denful/den) - Aspect-oriented, context-driven Dendritic Nix configurations.
 
 ## Quick Overview
 
-**Dendritic Design** is a software design pattern for structuring Nix code:
-- **Features**: Building blocks that contain all configuration for a specific thing (service, user, host, app, etc.)
-- **Aspects**: Modules within features that define configuration for specific contexts (NixOS, Darwin, Home-Manager)
-- **Module Classes**: Configuration contexts like `nixos`, `darwin`, `homeManager`, `generic`
-- **flake-parts**: Framework that makes the flake itself a configuration context, enabling the pattern
+**Den** takes the Dendritic pattern to the function-level, creating parametric configurations that become specific when applied to hosts/users:
 
-## Documentation
+- **Aspects**: Functions taking context (host, user) and returning modules for different Nix classes (nixos, darwin, homeManager, hjem, etc.)
+- **Hosts/Users/Homes**: Defined declaratively, aspects are shared across them
+- **Context Pipeline**: `den.ctx` transformations traverse host->users->homes, aggregating dependencies
+- **Custom Nix Classes**: Extensible class system (user, persys, microvm, etc.) via `den.provides.forward`
+- **Zero Dependencies**: `den.lib` is domain-agnostic, works with/without flakes, flake-parts, or any module system
 
-### Detailed Guides (`.agents/docs/`)
-- `Basics.md` - Core concepts, flake-parts setup, feature definition
-- `Dendritic_Aspects.md` - Design patterns for different aspect types (Simple, Multi-Context, Inheritance, Conditional, Collector, Constants, DRY, Factory)
-- `FAQ.md` - Common questions about the pattern, advantages/drawbacks
-- `Comprehensive_Example.md` - Real-world example structure and explanations
+## Den Documentation (fetch on demand)
 
-### Working Example (`.agents/example/`)
-Minimal setup demonstrating the pattern structure. Shows:
-- `flake.nix` - Auto-generated (DO NOT EDIT)
-- `modules/` - Directory containing all feature modules
-- `packages/` - External Nix code (not part of module system)
+Key documentation pages - fetch these when working on specific tasks:
 
-## File Organization
+- **Migration**: [From Flake To Den](https://den.oeiuwq.com/guides/from-flake-to-den/) - guide for migrating from flake-based setups
+- **Core Concepts**: [Core Principles](https://den.oeiuwq.com/explanation/core-principles/) - fundamental den concepts
+- **Getting Started**: [From Zero To Den](https://den.oeiuwq.com/guides/from-zero-to-den/) - fresh setup guide
+- **Custom Classes**: [Custom Nix Classes](https://den.oeiuwq.com/guides/custom-classes/) - creating custom Nix classes
+- **Home Manager**: [Homes Integration](https://den.oeiuwq.com/guides/home-manager/) - home-manager/hjem setup
+- **Batteries**: [Batteries](https://den.oeiuwq.com/guides/batteries/) - built-in reusable aspects
+- **Mutual Providers**: [Mutual Providers](https://den.oeiuwq.com/guides/mutual/) - cross-aspect contributions
+- **Namespaces**: [Sharing Namespaces](https://den.oeiuwq.com/guides/namespaces/) - organizing aspects
+- **Angle Brackets**: [Angle Brackets](https://den.oeiuwq.com/guides/angle-brackets/) - file naming conventions
+- **Context Pipeline**: [Context Pipeline](https://den.oeiuwq.com/explanation/context-pipeline/) - how den.ctx works
+- **Repo**: [github.com/denful/den](https://github.com/denful/den) - source code and README with extensive examples
 
-All `.nix` files in `modules/` are feature modules. Directory naming convention uses brackets to indicate platform context:
-- `[N]` - NixOS
-- `[D]` - Darwin (macOS)
-- `[n]` - Home-Manager on NixOS
-- `[d]` - Home-Manager on Darwin
-- `[G]` - Generic (works across classes)
+## Migration Status
 
-Example: `modules/users/bob [NDn]/` means the `bob` feature works on NixOS, Darwin, and Home-Manager (NixOS).
+This repo is being refactored from a flake-parts Dendritic pattern to den. The old `.agents/docs/` contain flake-parts-specific guides that are being replaced.
 
 ## Common Commands
 
 ```bash
-# Regenerate flake.nix after adding new inputs to flake-file settings
-nix run .#write-flake
+# Check if flake is valid
+nix flake check
+
+# Update flake inputs
+nix flake update
 
 # Build a specific host configuration
 nix build .#nixosConfigurations.linux-desktop.config.system.build.toplevel
@@ -50,12 +50,6 @@ nix build .#darwinConfigurations.macbook.config.system.build.toplevel
 # Build a home-manager standalone configuration
 nix build .#homeConfigurations.bob.activationPackage
 
-# Check if flake is valid
-nix flake check
-
-# Update flake inputs
-nix flake update
-
 # Build VM
 nix build .#nixosConfigurations.desktop.config.system.build.vm
 # Start VM
@@ -65,34 +59,10 @@ nix build .#nixosConfigurations.desktop.config.system.build.vm
 nix build .#nixosConfigurations.desktop.config.system.build.vmWithDisko
 # Start VM
 ./result/bin/disko-vm
-
-# Upload host ssh to vm to debug
-cat ~/.ssh/id_ed25519 | ssh -p 2222 georg@localhost "sudo tee /etc/ssh/ssh_host_ed25519_key > /dev/null && sudo chmod 600 /etc/ssh/ssh_host_ed25519_key"
-cat ~/.ssh/id_ed25519.pub | ssh -p 2222 georg@localhost "sudo tee /etc/ssh/ssh_host_ed25519_key.pub > /dev/null && sudo chmod 644 /etc/ssh/ssh_host_ed25519_key.pub"
-
-cat ~/.ssh/id_ed25519 | ssh -p 2222 georg@localhost "tee ~/.ssh/id_ed25519 > /dev/null"
-cat ~/.ssh/id_ed25519.pub | ssh -p 2222 georg@localhost "tee ~/.ssh/id_ed25519.pub > /dev/null"
 ```
-
-## Key Pattern References
-
-When creating new features, refer to these patterns in `Dendritic_Aspects.md`:
-
-| Pattern | Use Case |
-|---------|----------|
-| Simple Aspect | Feature for one or multiple independent contexts |
-| Multi-Context Aspect | Main context + mandatory nested config (e.g., NixOS + Home-Manager) |
-| Inheritance Aspect | Extends an existing feature |
-| Conditional Aspect | Parts depend on conditions (e.g., `lib.mkIf pkgs.stdenv.isLinux`) |
-| Collector Aspect | Configuration built from multiple contributor features |
-| Constants Aspect | Provides constants across all features |
-| DRY Aspect | Reusable attribute assignments (create new module class) |
-| Factory Aspect | Generate feature instances from parameters |
 
 ## Important Notes
 
-- The `flake.nix` file is auto-generated by `vic/flake-file` - do not edit manually
-- All feature modules are imported automatically via `vic/import-tree`
-- File splits within a feature directory do not affect functionality - use for clarity
-- Relative paths within features use context-appropriate references
-- Add new flake inputs to `flake-file.inputs` settings, then run `nix run .#write-flake`
+- When in doubt about den patterns, fetch the relevant docs page from the list above
+- The den README on GitHub contains extensive code examples for hosts, users, aspects, and custom classes
+- Den works with flake-parts but does not require it - the migration should simplify the setup
