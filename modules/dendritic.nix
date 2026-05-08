@@ -8,6 +8,10 @@
   # other inputs may be defined at a module using them.
   flake-file.inputs = {
     den.url = "github:vic/den";
+    darwin = {
+      url = "github:nix-darwin/nix-darwin";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     flake-file.url = "github:vic/flake-file";
     home-manager = {
       url = "github:nix-community/home-manager";
