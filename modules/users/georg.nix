@@ -6,7 +6,6 @@
       den.provides.define-user
       den.provides.primary-user
       (den.provides.user-shell "bash")
-      den.aspects.homeManager
     ];
 
     homeManager =

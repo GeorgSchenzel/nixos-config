@@ -9,6 +9,7 @@
       den.aspects.disko
       den.aspects.nix
       den.aspects.system-defaults
+      den.aspects.homeManager
     ];
 
     # host NixOS configuration
