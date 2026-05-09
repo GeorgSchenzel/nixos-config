@@ -1,4 +1,4 @@
-{ inputs, ... }:
+{ den, lib, inputs, ... }:
 {
   imports = [
     (inputs.flake-file.flakeModules.dendritic or { })
@@ -18,4 +18,10 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
   };
+
+  # enable hm by default
+  den.schema.user.classes = lib.mkDefault [ "homeManager" ];
+
+  # host<->user provides
+  den.ctx.user.includes = [ den.provides.mutual-provider ];
 }

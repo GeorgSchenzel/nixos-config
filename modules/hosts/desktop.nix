@@ -7,6 +7,7 @@
     includes = [
       den.aspects.bootloader
       den.aspects.disko
+      den.aspects.nix
     ];
 
     # host NixOS configuration

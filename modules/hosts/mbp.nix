@@ -1,6 +1,13 @@
+{ den, ... }:
 {
   # host aspect
   den.aspects.mbp = {
+
+    includes = [
+      den.aspects.nix
+      den.aspects.homeManager
+    ];
+
     # host NixOS configuration
     nixos =
       { pkgs, ... }:

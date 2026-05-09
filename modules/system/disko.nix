@@ -2,7 +2,7 @@
 
     flake-file.inputs.disko.url = "github:nix-community/disko";
 
-    den.aspects.disko ={  host, ... }: {
+    den.aspects.disko = { host, ... }: {
         nixos = {
             imports = [ inputs.disko.nixosModules.disko ];
 
