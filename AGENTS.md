@@ -66,3 +66,4 @@ nix build .#nixosConfigurations.desktop.config.system.build.vmWithDisko
 - When in doubt about den patterns, fetch the relevant docs page from the list above
 - The den README on GitHub contains extensive code examples for hosts, users, aspects, and custom classes
 - Den works with flake-parts but does not require it - the migration should simplify the setup
+- *IMPORTANT* when adding new files, git add them so that nix respects them

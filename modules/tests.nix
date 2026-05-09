@@ -1,4 +1,4 @@
-{ den, ... }: {
+{ den, lib, ... }: {
     den.aspects.desktop = {
         nixos = { config, ... }: {
             assertions = [
@@ -13,6 +13,14 @@
                 {
                     assertion = config.nixpkgs.config.allowUnfree == true;
                     message = "allowUnfree is enabled";
+                }
+                {
+                    assertion = builtins.any (f: f.file == "/etc/machine-id") config.environment.persistence."/persist/system".files;
+                    message = "/etc/machine-id must be persisted under /persist/system";
+                }
+                {
+                    assertion = builtins.any (f: f.directory == "/var/log") config.environment.persistence."/persist/system".directories;
+                    message = "/var/log must be persisted under /persist/system";
                 }
             ];
         };

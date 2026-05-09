@@ -1,6 +1,7 @@
 { den, ... }: {
   den.hosts.x86_64-linux.desktop.windowsBootDrive = "HD1f65535a2";
   den.hosts.x86_64-linux.desktop.mainDiskDevice = "/dev/nvme0n1";
+  den.hosts.x86_64-linux.desktop.btrfsPartition = "/dev/nvme0n1p2";
 
   den.aspects.desktop = {
 
@@ -11,6 +12,7 @@
       den.aspects.system-defaults
       den.aspects.homeManager
       den.aspects.secrets
+      den.aspects.impermanence
     ];
 
     # host NixOS configuration
