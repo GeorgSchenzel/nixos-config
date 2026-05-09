@@ -10,6 +10,7 @@
       den.aspects.nix
       den.aspects.system-defaults
       den.aspects.homeManager
+      den.aspects.secrets
     ];
 
     # host NixOS configuration

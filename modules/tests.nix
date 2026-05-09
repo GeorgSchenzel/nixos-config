@@ -10,6 +10,10 @@
                     assertion = config.boot.loader.systemd-boot.windows.windows.efiDeviceHandle == "HD1f65535a2";
                     message = "boot drive must be set to HD1f65535a2 for the windows boot entry";
                 }
+                {
+                    assertion = config.nixpkgs.config.allowUnfree == true;
+                    message = "allowUnfree is enabled";
+                }
             ];
         };
     };
