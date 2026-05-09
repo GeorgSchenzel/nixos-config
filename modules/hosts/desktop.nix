@@ -1,6 +1,12 @@
-{
+{ den, ... }: {
   # host aspect
   den.aspects.desktop = {
+
+    includes = [
+      den.aspects.bootloader
+      den.aspects.disko
+    ];
+
     # host NixOS configuration
     nixos =
       { pkgs, ... }:
