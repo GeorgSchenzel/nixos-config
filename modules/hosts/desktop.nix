@@ -1,5 +1,6 @@
 { den, ... }: {
-  # host aspect
+  den.hosts.x86_64-linux.desktop.windowsBootDrive = "HD1f65535a2";
+
   den.aspects.desktop = {
 
     includes = [

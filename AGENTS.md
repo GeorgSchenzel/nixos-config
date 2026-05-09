@@ -16,16 +16,16 @@ This repo uses [den](https://github.com/denful/den) - Aspect-oriented, context-d
 
 Key documentation pages - fetch these when working on specific tasks:
 
-- **Migration**: [From Flake To Den](https://den.oeiuwq.com/guides/from-flake-to-den/) - guide for migrating from flake-based setups
-- **Core Concepts**: [Core Principles](https://den.oeiuwq.com/explanation/core-principles/) - fundamental den concepts
-- **Getting Started**: [From Zero To Den](https://den.oeiuwq.com/guides/from-zero-to-den/) - fresh setup guide
-- **Custom Classes**: [Custom Nix Classes](https://den.oeiuwq.com/guides/custom-classes/) - creating custom Nix classes
-- **Home Manager**: [Homes Integration](https://den.oeiuwq.com/guides/home-manager/) - home-manager/hjem setup
-- **Batteries**: [Batteries](https://den.oeiuwq.com/guides/batteries/) - built-in reusable aspects
-- **Mutual Providers**: [Mutual Providers](https://den.oeiuwq.com/guides/mutual/) - cross-aspect contributions
-- **Namespaces**: [Sharing Namespaces](https://den.oeiuwq.com/guides/namespaces/) - organizing aspects
-- **Angle Brackets**: [Angle Brackets](https://den.oeiuwq.com/guides/angle-brackets/) - file naming conventions
-- **Context Pipeline**: [Context Pipeline](https://den.oeiuwq.com/explanation/context-pipeline/) - how den.ctx works
+- **Migration**: [From Flake To Den](https://den.denful.dev/guides/from-flake-to-den/) - guide for migrating from flake-based setups
+- **Core Concepts**: [Core Principles](https://den.denful.dev/explanation/core-principles/) - fundamental den concepts
+- **Getting Started**: [From Zero To Den](https://den.denful.dev/guides/from-zero-to-den/) - fresh setup guide
+- **Custom Classes**: [Custom Nix Classes](https://den.denful.dev/guides/custom-classes/) - creating custom Nix classes
+- **Home Manager**: [Homes Integration](https://den.denful.dev/guides/home-manager/) - home-manager/hjem setup
+- **Batteries**: [Batteries](https://den.denful.dev/guides/batteries/) - built-in reusable aspects
+- **Mutual Providers**: [Mutual Providers](https://den.denful.dev/guides/mutual/) - cross-aspect contributions
+- **Namespaces**: [Sharing Namespaces](https://den.denful.dev/guides/namespaces/) - organizing aspects
+- **Angle Brackets**: [Angle Brackets](https://den.denful.dev/guides/angle-brackets/) - file naming conventions
+- **Context Pipeline**: [Context Pipeline](https://den.denful.dev/explanation/context-pipeline/) - how den.ctx works
 - **Repo**: [github.com/denful/den](https://github.com/denful/den) - source code and README with extensive examples
 
 ## Migration Status
