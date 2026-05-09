@@ -2,14 +2,14 @@
 
     flake-file.inputs.disko.url = "github:nix-community/disko";
 
-    den.aspects.disko = {
+    den.aspects.disko ={  host, ... }: {
         nixos = {
             imports = [ inputs.disko.nixosModules.disko ];
 
             disko.devices = {
             disk.main = {
                 type = "disk";
-                device = "/dev/nvme0n1"; #todo: configure in host
+                device = host.mainDiskDevice;
                 content = {
                 type = "gpt";
                 partitions = {
