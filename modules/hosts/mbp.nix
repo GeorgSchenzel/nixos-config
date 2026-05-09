@@ -5,7 +5,7 @@
 
     includes = [
       den.aspects.nix
-      den.aspects.homeManager
+      den.aspects.system-defaults
     ];
 
     # host NixOS configuration
@@ -19,7 +19,7 @@
     provides.to-users.homeManager =
       { pkgs, ... }:
       {
-        home.packages = [ pkgs.vim ];
+        targets.darwin.copyApps.enable = true;
       };
   };
 }

@@ -8,6 +8,7 @@
       den.aspects.bootloader
       den.aspects.disko
       den.aspects.nix
+      den.aspects.system-defaults
     ];
 
     # host NixOS configuration
@@ -21,7 +22,6 @@
     provides.to-users.homeManager =
       { pkgs, ... }:
       {
-        home.packages = [ pkgs.vim ];
       };
   };
 }
