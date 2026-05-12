@@ -3,21 +3,27 @@
     flake-file.inputs.impermanence.url = "github:nix-community/impermanence";
 
     den.aspects.impermanence = { host, ... }: {
-        nixos = { pkgs, ... }: {
+        
+        persist-system = {
+            directories = [
+                "/var/log"
+                "/var/lib/nixos"
+                "/var/lib/systemd/coredump"
+                "/etc/NetworkManager/system-connections"
+            ];
+            files = [
+                "/etc/machine-id"
+            ];
+        };
+        
+        nixos = { pkgs, persist-system, ... }: {
             imports = [ inputs.impermanence.nixosModules.impermanence ];
 
             # minimum system level persists
             environment.persistence."/persist/system" = {
                 hideMounts = true;
-                directories = [
-                    "/var/log"
-                    "/var/lib/nixos"
-                    "/var/lib/systemd/coredump"
-                    "/etc/NetworkManager/system-connections"
-                ];
-                files = [
-                    "/etc/machine-id"
-                ];
+                directories = lib.concatMap (f: f.directories or []) persist-system;
+                files = lib.concatMap (f: f.files or []) persist-system;
             };
 
             programs.fuse.userAllowOther = true;
