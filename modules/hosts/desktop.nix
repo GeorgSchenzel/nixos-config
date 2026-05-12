@@ -13,6 +13,8 @@
       den.aspects.homeManager
       den.aspects.secrets
       den.aspects.impermanence
+      den.aspects.ssh
+      den.aspects.firmware
     ];
 
     # host NixOS configuration

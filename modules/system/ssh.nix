@@ -10,8 +10,8 @@
                     PermitRootLogin = "no";
                     KbdInteractiveAuthentication = false;
                 };
-                };
-        }
+            };
+        };
 
         persist-system = {
             files = [
@@ -27,6 +27,5 @@
                 ".ssh"
             ];
         };
-    }
-
+    };
 }
