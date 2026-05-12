@@ -24,4 +24,13 @@
 
   # host<->user provides
   den.schema.user.includes = [ den.provides.mutual-provider ];
+
+  # quirks
+  den.quirks.persist-system = {
+    description = "Files and directories to persist in the system.";
+  };
+
+  den.quirks.persist-home = {
+    description = "Files and directories to persist in the user home.";
+  };
 }

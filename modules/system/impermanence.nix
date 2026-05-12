@@ -22,7 +22,6 @@
 
             programs.fuse.userAllowOther = true;
 
-
             # rollback service
 
             boot.initrd.systemd = 
@@ -126,6 +125,11 @@
                     '';
                 })
             ];
+        };
+
+        provides.to-users.homeManager = { persist-home, ... }: {
+          home.persistence."/persist/home".directories = lib.concatMap (f: f.directories or []) persist-home;
+          home.persistence."/persist/home".files = lib.concatMap (f: f.files or []) persist-home;
         };
     };
 }

@@ -6,6 +6,7 @@
       den.provides.define-user
       den.provides.primary-user
       (den.provides.user-shell "bash")
+      # den._.host-aspects # allows host-aspects to fill homeManager by default, not used
     ];
 
     homeManager =
@@ -13,6 +14,13 @@
       {
         home.packages = [ pkgs.htop ];
       };
+
+    persist-home = {
+      directories = [
+        "nixos-config"
+        "hot"
+      ];
+    };
 
     # user can provide NixOS configurations
     # to any host it is included on

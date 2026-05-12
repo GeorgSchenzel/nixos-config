@@ -1,7 +1,7 @@
 { den, inputs, ... }:
 {
     den.aspects.homeManager = { user, ... }: {
-        homeManager = { config, pkgs, lib, ... }:
+        provides.to-users.homeManager = { config, pkgs, lib, ... }:
         {
             home.homeDirectory =
                 if pkgs.stdenv.isDarwin then

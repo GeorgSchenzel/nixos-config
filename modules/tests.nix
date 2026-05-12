@@ -22,6 +22,11 @@
                     assertion = builtins.any (f: f.directory == "/var/log") config.environment.persistence."/persist/system".directories;
                     message = "/var/log must be persisted under /persist/system";
                 }
+                {
+                    assertion = builtins.any (d: d.directory == "nixos-config")
+                        config.home-manager.users.georg.home.persistence."/persist/home".directories;
+                    message = "nixos-config must be persisted under /persist/home for georg on desktop";
+                }
             ];
         };
     };
