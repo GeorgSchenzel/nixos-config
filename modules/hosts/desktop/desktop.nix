@@ -16,6 +16,7 @@
       den.aspects.ssh
       den.aspects.firmware
       den.aspects.audio
+      den.aspects.vm
     ];
 
     # host NixOS configuration
