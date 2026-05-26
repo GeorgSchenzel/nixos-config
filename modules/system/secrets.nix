@@ -7,13 +7,22 @@
   };
 
   den.aspects.secrets = {
-    os = {
+    nixos = {
       imports = [ inputs.sops-nix.nixosModules.sops ];
       sops = {
         defaultSopsFile = ../../secrets/example.yaml;
         age.sshKeyPaths = [ "/etc/ssh/ssh_host_ed25519_key" ];
       };
     };
+
+    darwin = {
+      imports = [ inputs.sops-nix.darwinModules.sops ];
+      sops = {
+        defaultSopsFile = ../../secrets/example.yaml;
+        age.sshKeyPaths = [ "/etc/ssh/ssh_host_ed25519_key" ];
+      };
+    };
+
 
     provides.to-users.homeManager = { config, ... }: {
       imports = [ inputs.sops-nix.homeManagerModules.sops ];

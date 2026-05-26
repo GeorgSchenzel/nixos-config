@@ -6,7 +6,12 @@
     includes = [
       den.aspects.nix
       den.aspects.system-defaults
+      den.aspects.homeManager
       den.aspects.secrets
+      den.aspects.cli-tools
+      den.aspects.ai-tools
+      den.aspects.desktop-apps
+      den.aspects.yabai
     ];
 
     # host NixOS configuration

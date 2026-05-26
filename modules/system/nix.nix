@@ -5,15 +5,6 @@
 
             nixpkgs.config.allowUnfree = true;
 
-            nixpkgs.overlays = [
-                (final: _prev: {
-                unstable = import inputs.nixpkgs-unstable {
-                    inherit (final) config;
-                    system = pkgs.stdenv.hostPlatform.system;
-                    };
-                })
-            ];
-
             nix.settings = {
                 substituters = [
                 "https://cache.nixos.org?priority=10"

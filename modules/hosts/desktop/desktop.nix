@@ -17,6 +17,10 @@
       den.aspects.firmware
       den.aspects.audio
       den.aspects.vm
+      den.aspects.cli-tools
+      den.aspects.ai-tools
+      den.aspects.desktop-apps
+      den.aspects.desktop-environment
     ];
 
     # host NixOS configuration
