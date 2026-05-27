@@ -1,7 +1,7 @@
 { den, inputs, ... }:
 
 {
-  flake-file.inputs.opencode.url = "github:anomalyco/opencode";
+  flake-file.inputs.opencode.url = "github:anomalyco/opencode/f06b78751e08ca38dc50da7f7ca1c408e6ad6298";
 
   den.aspects.ai-tools = {
     provides.to-users.homeManager = { config, pkgs, ... }:
