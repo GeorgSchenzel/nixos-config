@@ -17,7 +17,7 @@
       den.aspects.firmware
       den.aspects.audio
       den.aspects.vm
-      den.aspects.cli-tools
+      den.aspects.cli-tools-desktop
       den.aspects.ai-tools
       den.aspects.desktop-apps
       den.aspects.desktop-environment
