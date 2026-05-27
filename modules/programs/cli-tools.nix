@@ -31,7 +31,12 @@
         bun
         uv
         just
+        jdk21
+        maven
+        quarkus
       ];
+
+      programs.tmux.enable = true;
     };
 
     persist-home = {

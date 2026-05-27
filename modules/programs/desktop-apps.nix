@@ -9,6 +9,7 @@
         vscode
         obsidian
         jetbrains.pycharm
+        jetbrains.idea
         qbittorrent
       ] ++ lib.optionals pkgs.stdenv.isDarwin [
         iina
