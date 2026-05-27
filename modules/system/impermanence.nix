@@ -16,7 +16,7 @@
             ];
         };
         
-        nixos = { pkgs, persist-system, ... }: {
+        nixos = { pkgs, persist-system, persist-home, ... }: {
             imports = [ inputs.impermanence.nixosModules.impermanence ];
 
             # minimum system level persists
@@ -25,6 +25,14 @@
                 directories = lib.concatMap (f: f.directories or []) persist-system;
                 files = lib.concatMap (f: f.files or []) persist-system;
             };
+
+            # home-level persists (host + exposed user quirks)
+            home-manager.sharedModules = [{
+                home.persistence."/persist/home" = {
+                    directories = lib.concatMap (f: f.directories or []) persist-home;
+                    files = lib.concatMap (f: f.files or []) persist-home;
+                };
+            }];
 
             programs.fuse.userAllowOther = true;
 
@@ -133,9 +141,5 @@
             ];
         };
 
-        provides.to-users.homeManager = { persist-home, ... }: {
-          home.persistence."/persist/home".directories = lib.concatMap (f: f.directories or []) persist-home;
-          home.persistence."/persist/home".files = lib.concatMap (f: f.files or []) persist-home;
-        };
     };
 }

@@ -1,7 +1,7 @@
 { den, ... }: {
 
-    den.aspects.desktop = { host, pkgs, ... }: {
-        nixos = {
+    den.aspects.desktop = { host, ... }: {
+        nixos = { pkgs, ... }: {
             services.pipewire.wireplumber.configPackages = [
                 (pkgs.writeTextDir "share/wireplumber/wireplumber.conf.d/50-audio-rules.conf" ''
                     monitor.alsa.rules = [

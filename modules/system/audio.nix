@@ -1,7 +1,7 @@
 { den, pkgs, ... }: {
 
-    den.aspects.audio = { host, pkgs, ... }: {
-        nixos = {
+    den.aspects.audio = { host, ... }: {
+        nixos = { pkgs, ... }: {
           security.rtkit.enable = true;
 
           services.pipewire = {

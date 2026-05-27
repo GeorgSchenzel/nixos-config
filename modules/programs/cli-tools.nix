@@ -10,6 +10,15 @@
       ];
     };
 
+    nixos = { pkgs, ... }: {
+      programs.nh = {
+        enable = true;
+        clean.enable = true;
+        clean.extraArgs = "--keep-since 4d --keep 3";
+        flake = "/home/georg/nixos-config";
+      };
+    };
+
     provides.to-users.homeManager = { pkgs, ... }: {
       home.packages = with pkgs; [
         tika

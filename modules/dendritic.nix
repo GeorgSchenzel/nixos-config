@@ -23,7 +23,14 @@
   den.schema.user.classes = lib.mkDefault [ "homeManager" ];
 
   # host<->user provides
-  den.schema.user.includes = [ den.provides.mutual-provider ];
+  den.policies.expose-persist-home = { host, user, ... }:
+    let inherit (den.lib.policy) pipe; in
+    [ (pipe.from "persist-home" [ pipe.expose ]) ];
+
+  den.schema.user.includes = [
+    den.provides.mutual-provider
+    den.policies.expose-persist-home
+  ];
 
   # quirks
   den.quirks.persist-system = {
