@@ -1,15 +1,17 @@
 { den, inputs, ... }:
 
 {
-  flake-file.inputs.opencode.url = "github:anomalyco/opencode/f06b78751e08ca38dc50da7f7ca1c408e6ad6298";
+  flake-file.inputs.opencode.url = "github:anomalyco/opencode";
+  flake-file.inputs.workmux.url = "github:raine/workmux";
 
   den.aspects.ai-tools = {
     provides.to-users.homeManager = { config, pkgs, ... }:
     let
       opencode = inputs.opencode.packages.${pkgs.stdenv.hostPlatform.system}.default;
+      workmux = inputs.workmux.packages.${pkgs.stdenv.hostPlatform.system}.default;
     in
     {
-      home.packages = [ opencode ];
+      home.packages = [ opencode pkgs.lima workmux ];
 
       sops.secrets = {
         zai-api-key = { };

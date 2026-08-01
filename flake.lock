@@ -224,6 +224,22 @@
         "type": "github"
       }
     },
+    "nixpkgs_5": {
+      "locked": {
+        "lastModified": 1768305791,
+        "narHash": "sha256-AIdl6WAn9aymeaH/NvBj0H9qM+XuAuYbGMZaP0zcXAQ=",
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "1412caf7bf9e660f2f962917c14b1ea1c3bc695e",
+        "type": "github"
+      },
+      "original": {
+        "owner": "NixOS",
+        "ref": "nixos-unstable",
+        "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
     "opencode": {
       "inputs": {
         "nixpkgs": "nixpkgs_4"
@@ -255,7 +271,8 @@
         "import-tree": "import-tree",
         "nixpkgs": "nixpkgs_3",
         "opencode": "opencode",
-        "sops-nix": "sops-nix"
+        "sops-nix": "sops-nix",
+        "workmux": "workmux"
       }
     },
     "sops-nix": {
@@ -275,6 +292,24 @@
       "original": {
         "owner": "Mic92",
         "repo": "sops-nix",
+        "type": "github"
+      }
+    },
+    "workmux": {
+      "inputs": {
+        "nixpkgs": "nixpkgs_5"
+      },
+      "locked": {
+        "lastModified": 1785270764,
+        "narHash": "sha256-RMJo7baJhFWQtCPTaq+R7e/xj74luYjNVvRVhXag8sU=",
+        "owner": "raine",
+        "repo": "workmux",
+        "rev": "801b8149cb043b97730e4ca8994e795dacfd7ed8",
+        "type": "github"
+      },
+      "original": {
+        "owner": "raine",
+        "repo": "workmux",
         "type": "github"
       }
     }

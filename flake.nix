@@ -27,5 +27,6 @@
       url = "github:Mic92/sops-nix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    workmux.url = "github:raine/workmux";
   };
 }
