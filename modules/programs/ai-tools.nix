@@ -3,15 +3,17 @@
 {
   flake-file.inputs.opencode.url = "github:anomalyco/opencode";
   flake-file.inputs.workmux.url = "github:raine/workmux";
+  flake-file.inputs.herdr.url = "github:herdrdev/herdr/v0.8.0";
 
   den.aspects.ai-tools = {
     provides.to-users.homeManager = { config, pkgs, ... }:
     let
       opencode = inputs.opencode.packages.${pkgs.stdenv.hostPlatform.system}.default;
       workmux = inputs.workmux.packages.${pkgs.stdenv.hostPlatform.system}.default;
+      herdr = inputs.herdr.packages.${pkgs.stdenv.hostPlatform.system}.default;
     in
     {
-      home.packages = [ opencode pkgs.lima workmux ];
+      home.packages = [ opencode pkgs.lima workmux herdr ];
 
       sops.secrets = {
         zai-api-key = { };
@@ -37,6 +39,8 @@
       directories = [
         ".local/share/opencode"
         ".local/state/opencode"
+        ".config/herdr"
+        ".herdr"
       ];
     };
   };

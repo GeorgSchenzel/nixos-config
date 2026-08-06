@@ -15,6 +15,7 @@
       url = "github:hercules-ci/flake-parts";
       inputs.nixpkgs-lib.follows = "nixpkgs";
     };
+    herdr.url = "github:herdrdev/herdr/v0.8.0";
     home-manager = {
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -22,7 +23,7 @@
     impermanence.url = "github:nix-community/impermanence";
     import-tree.url = "github:vic/import-tree";
     nixpkgs.url = "https://channels.nixos.org/nixpkgs-unstable/nixexprs.tar.xz";
-    opencode.url = "github:anomalyco/opencode/f06b78751e08ca38dc50da7f7ca1c408e6ad6298";
+    opencode.url = "github:anomalyco/opencode";
     sops-nix = {
       url = "github:Mic92/sops-nix";
       inputs.nixpkgs.follows = "nixpkgs";
