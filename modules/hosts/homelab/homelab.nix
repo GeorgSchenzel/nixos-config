@@ -15,6 +15,7 @@
       den.aspects.firmware
       den.aspects.vm
       den.aspects.cli-tools
+      den.aspects.podman
     ];
 
     nixos = { pkgs, ... }: {

@@ -21,6 +21,7 @@
       den.aspects.ai-tools
       den.aspects.desktop-apps
       den.aspects.desktop-environment
+      den.aspects.podman
     ];
 
     # host NixOS configuration
