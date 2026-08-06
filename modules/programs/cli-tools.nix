@@ -4,7 +4,6 @@
   den.aspects.cli-tools = {
     os = { pkgs, ... }: {
       environment.systemPackages = with pkgs; [
-        vim
         git
       ];
     };

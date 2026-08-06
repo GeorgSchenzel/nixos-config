@@ -12,6 +12,7 @@
       den.aspects.ai-tools
       den.aspects.desktop-apps
       den.aspects.yabai
+      den.aspects.neovim
     ];
 
     # host NixOS configuration
