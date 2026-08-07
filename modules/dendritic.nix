@@ -27,6 +27,10 @@
     let inherit (den.lib.policy) pipe; in
     [ (pipe.from "persist-home" [ pipe.expose ]) ];
 
+  den.schema.host.includes = [
+    den.batteries.hostname
+  ];
+
   den.schema.user.includes = [
     den.provides.mutual-provider
     den.policies.expose-persist-home
