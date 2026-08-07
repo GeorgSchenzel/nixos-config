@@ -77,18 +77,39 @@
       };
     };
 
-    provides.to-users.homeManager = { pkgs, lib, ... }:
+    provides.to-users.homeManager = { pkgs, lib, config, ... }:
       lib.mkIf pkgs.stdenv.isLinux {
         home.packages = with pkgs; [
           swaylock
           swayidle
           wl-clipboard
+          grim
+          slurp
         ];
 
         programs.rofi = {
           enable = true;
           package = pkgs.rofi;
         };
+
+        programs.satty = {
+          enable = true;
+          settings.general = {
+            initial-tool = "brush";
+            resize.mode = "smart";
+            output-filename = "${config.home.homeDirectory}/Pictures/Screenshots/satty-%Y-%m-%dT%H-%M-%S.png";
+          };
+        };
+
+        xdg.configFile."satty/overrides.css".text = ''
+          window, .inner_box, .outer_box {
+            background-color: black;
+          }
+          .toolbar {
+            color: @headerbar_fg_color;
+            background-color: #ddddddaa;
+          }
+        '';
 
         wayland.windowManager.sway = {
           enable = true;
@@ -138,6 +159,10 @@
               titlebar = false;
             };
 
+            floating.criteria = [
+              { app_id = "[Ss]atty"; }
+            ];
+
             colors = {
               focused = {
                 border = "#89b4fa";
@@ -186,14 +211,14 @@
               "${modifier}+7" = "workspace number 7";
               "${modifier}+8" = "workspace number 8";
 
-              "${modifier}+Shift+1" = "move container to workspace number 1";
-              "${modifier}+Shift+2" = "move container to workspace number 2";
-              "${modifier}+Shift+3" = "move container to workspace number 3";
-              "${modifier}+Shift+4" = "move container to workspace number 4";
-              "${modifier}+Shift+5" = "move container to workspace number 5";
-              "${modifier}+Shift+6" = "move container to workspace number 6";
-              "${modifier}+Shift+7" = "move container to workspace number 7";
-              "${modifier}+Shift+8" = "move container to workspace number 8";
+              "${modifier}+Shift+1" = "move container to workspace number 1, workspace number 1";
+              "${modifier}+Shift+2" = "move container to workspace number 2, workspace number 2";
+              "${modifier}+Shift+3" = "move container to workspace number 3, workspace number 3";
+              "${modifier}+Shift+4" = "move container to workspace number 4, workspace number 4";
+              "${modifier}+Shift+5" = "move container to workspace number 5, workspace number 5";
+              "${modifier}+Shift+6" = "move container to workspace number 6, workspace number 6";
+              "${modifier}+Shift+7" = "move container to workspace number 7, workspace number 7";
+              "${modifier}+Shift+8" = "move container to workspace number 8, workspace number 8";
 
               "${modifier}+b" = "splith";
               "${modifier}+v" = "splitv";
@@ -212,6 +237,10 @@
               "XF86AudioLowerVolume" = "exec wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-";
               "XF86AudioMute" = "exec wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle";
               "XF86AudioMicMute" = "exec wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle";
+
+              "Print" = "exec mkdir -p ~/Pictures/Screenshots && grim - | wl-copy";
+              "Shift+Print" = "exec mkdir -p ~/Pictures/Screenshots && grim ~/Pictures/Screenshots/$(date -u +%Y-%m-%dT%H-%M-%SZ).png";
+              "${modifier}+Shift+s" = "exec grim -g \"$(slurp)\" - | satty -f -";
             };
 
             modes.resize = {
