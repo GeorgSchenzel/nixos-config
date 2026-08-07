@@ -1,19 +1,35 @@
 { den, inputs, ... }:
 
 {
-  flake-file.inputs.opencode.url = "github:anomalyco/opencode";
   flake-file.inputs.workmux.url = "github:raine/workmux";
   flake-file.inputs.herdr.url = "github:herdrdev/herdr/v0.8.0";
 
   den.aspects.ai-tools = {
     provides.to-users.homeManager = { config, pkgs, ... }:
     let
-      opencode = inputs.opencode.packages.${pkgs.stdenv.hostPlatform.system}.default;
       workmux = inputs.workmux.packages.${pkgs.stdenv.hostPlatform.system}.default;
       herdr = inputs.herdr.packages.${pkgs.stdenv.hostPlatform.system}.default;
     in
     {
-      home.packages = [ opencode pkgs.lima workmux herdr ];
+      home.packages = [ pkgs.lima workmux herdr ];
+
+      programs.opencode = {
+        enable = true;
+        settings = {
+          model = "zai-coding-plan/glm-5.2";
+          permission = {
+            "*" = "allow";
+            doom_loop = "ask";
+            external_directory."*" = "ask";
+            read = {
+              "*" = "allow";
+              "*.env" = "deny";
+              "*.env.*" = "deny";
+              "*.env.example" = "allow";
+            };
+          };
+        };
+      };
 
       sops.secrets = {
         zai-api-key = { };
