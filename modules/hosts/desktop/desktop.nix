@@ -20,6 +20,7 @@
       den.aspects.cli-tools-desktop
       den.aspects.ai-tools
       den.aspects.desktop-apps
+      den.aspects.game-dev
       den.aspects.desktop-environment
       den.aspects.podman
       den.aspects.neovim
