@@ -6,12 +6,8 @@
 
   den.aspects.ai-tools = {
     provides.to-users.homeManager = { config, pkgs, ... }:
-    let
-      workmux = inputs.workmux.packages.${pkgs.stdenv.hostPlatform.system}.default;
-      herdr = inputs.herdr.packages.${pkgs.stdenv.hostPlatform.system}.default;
-    in
     {
-      home.packages = [ pkgs.lima workmux herdr ];
+      home.packages = [ pkgs.lima ];
 
       programs.opencode = {
         enable = true;
@@ -55,8 +51,6 @@
       directories = [
         ".local/share/opencode"
         ".local/state/opencode"
-        ".config/herdr"
-        ".herdr"
       ];
     };
   };

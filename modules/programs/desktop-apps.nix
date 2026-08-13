@@ -16,6 +16,10 @@
       ];
 
       programs.alacritty.enable = true;
+      programs.ghostty = {
+        enable = true;
+        package = if pkgs.stdenv.isDarwin then pkgs.ghostty-bin else pkgs.ghostty;
+      };
     };
 
     persist-home = {
