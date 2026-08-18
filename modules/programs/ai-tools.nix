@@ -12,7 +12,7 @@
       programs.opencode = {
         enable = true;
         settings = {
-          model = "zai-coding-plan/glm-5.2";
+          model = "zai-coding-plan/glm-5.3";
           permission = {
             "*" = "allow";
             doom_loop = "ask";

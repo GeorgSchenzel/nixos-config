@@ -16,5 +16,9 @@
     persist-system = {
       directories = [ "/var/lib/containers" ];
     };
+
+    persist-home = {
+      directories = [ ".local/share/containers" ];
+    };
   };
 }
