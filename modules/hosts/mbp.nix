@@ -11,6 +11,7 @@
       den.aspects.cli-tools-desktop
       den.aspects.ai-tools
       den.aspects.desktop-apps
+      den.aspects.podman
       den.aspects.yabai
       den.aspects.neovim
     ];

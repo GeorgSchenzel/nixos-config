@@ -44,6 +44,21 @@
 
         darwin = { pkgs, ... }: {
             system.stateVersion = 6;
+
+            nix.settings.trusted-users = [
+              "root"
+              "@admin"
+            ];
+
+            nix.linux-builder = {
+              enable = true;
+              maxJobs = 4;
+              config.virtualisation = {
+                cores = 4;
+                darwin-builder.memorySize = 6 * 1024;
+                darwin-builder.diskSize = 40 * 1024;
+              };
+            };
         };
     };
 }

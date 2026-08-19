@@ -28,6 +28,7 @@
         jdk21
         maven
         quarkus
+        glab
       ];
     };
 
