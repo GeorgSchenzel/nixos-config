@@ -24,6 +24,7 @@
       den.aspects.desktop-environment
       den.aspects.podman
       den.aspects.neovim
+      den.aspects.microsandbox
     ];
 
     # host NixOS configuration

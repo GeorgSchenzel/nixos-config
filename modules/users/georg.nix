@@ -26,6 +26,7 @@
     # to any host it is included on
     provides.to-hosts.nixos = { pkgs, ... }: {
       users.users.georg.password = "password";
+      users.users.georg.extraGroups = [ "kvm" ];
     };
   };
 }
