@@ -14,6 +14,7 @@
       den.aspects.podman
       den.aspects.yabai
       den.aspects.neovim
+      den.aspects.microsandbox
     ];
 
     # host NixOS configuration
