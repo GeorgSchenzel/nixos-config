@@ -4,4 +4,6 @@ require("which-key").setup({
 
 require("which-key").add({
   { "<leader>f", group = "Telescope" },
+  { "<leader>l", group = "LSP" },
+  { "<leader>g", group = "Git" },
 })

@@ -26,7 +26,7 @@
             telescope        = telescope-nvim;
             treesitter       = nvim-treesitter.withPlugins (p: [
               p.nix p.lua p.bash p.vim p.vimdoc p.query
-              p.python p.rust p.go p.c p.cpp p.java
+              p.python p.rust p.go p.c p.cpp p.java p.c_sharp
               p.typescript p.tsx p.javascript
               p.json p.yaml p.toml p.markdown p.markdown_inline p.regex p.css
             ]);
@@ -34,8 +34,18 @@
             autopairs        = nvim-autopairs;
             indent-blankline = indent-blankline-nvim;
             which-key        = which-key-nvim;
+            lspconfig        = nvim-lspconfig;
+            blink            = blink-cmp;
+            friendly-snippets = friendly-snippets;
+            gitsigns         = gitsigns-nvim;
+            yazi             = yazi-nvim;
           };
-          runtimePkgs = with pkgs; [ ripgrep fd ];
+          runtimePkgs = with pkgs; [
+            ripgrep fd yazi lazygit
+            nil lua-language-server gopls basedpyright rust-analyzer
+            typescript-language-server bash-language-server
+            csharp-ls jdt-language-server
+          ];
         };
       in
       {
@@ -43,7 +53,7 @@
       };
 
     persist-home = {
-      directories = [ ".local/state/nvim" ];
+      directories = [ ".local/state/nvim" ".local/state/yazi" ];
     };
   };
 }
