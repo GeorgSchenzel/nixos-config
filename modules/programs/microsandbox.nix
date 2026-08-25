@@ -18,7 +18,8 @@
 
       sourceRoot = ".";
 
-      nativeBuildInputs = lib.optionals pkgs.stdenv.hostPlatform.isLinux [ pkgs.autoPatchelfHook ];
+      nativeBuildInputs = lib.optionals pkgs.stdenv.hostPlatform.isLinux [ pkgs.autoPatchelfHook ]
+        ++ lib.optionals pkgs.stdenv.hostPlatform.isDarwin [ pkgs.makeBinaryWrapper ];
       buildInputs = lib.optionals pkgs.stdenv.hostPlatform.isLinux [
         pkgs.libcap_ng
         pkgs.libgcc
@@ -42,6 +43,13 @@
         fi
 
         runHook postInstall
+      '';
+
+      postInstall = lib.optionalString pkgs.stdenv.hostPlatform.isDarwin ''
+        mv $out/bin/msb $out/bin/.msb-unwrapped
+        dylib=("$out"/lib/libkrunfw.*.dylib)
+        makeBinaryWrapper $out/bin/.msb-unwrapped $out/bin/msb \
+          --set MSB_LIBKRUNFW_PATH "''${dylib[0]}"
       '';
 
       meta = {
