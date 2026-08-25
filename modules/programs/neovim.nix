@@ -14,7 +14,7 @@
       };
     };
 
-    provides.to-users.homeManager = { pkgs, ... }:
+    provides.to-users.homeManager = { lib, pkgs, ... }:
       let
         wrappedNvim = inputs.nix-wrapper-modules.wrappers.neovim.wrap {
           inherit pkgs;
@@ -44,8 +44,8 @@
             ripgrep fd yazi lazygit
             nil lua-language-server gopls basedpyright rust-analyzer
             typescript-language-server bash-language-server
-            csharp-ls jdt-language-server
-          ];
+            jdt-language-server
+          ] ++ lib.optionals (!pkgs.stdenv.hostPlatform.isDarwin) [ csharp-ls ];
         };
       in
       {

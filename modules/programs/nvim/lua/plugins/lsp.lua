@@ -58,7 +58,12 @@ vim.lsp.config("lua_ls", {
 -- with a per-workspace data dir under persisted ~/.local/state/nvim.
 
 -- Enable servers (auto-attach on matching filetypes).
-vim.lsp.enable({
+-- csharp-ls is only added to runtimePkgs on non-darwin (crashes on aarch64-darwin, nixpkgs badPlatforms).
+local servers = {
   "nil_ls", "gopls", "basedpyright", "rust_analyzer", "ts_ls",
-  "bashls", "csharp_ls", "jdtls", "lua_ls",
-})
+  "bashls", "jdtls", "lua_ls",
+}
+if vim.fn.executable("csharp-ls") == 1 then
+  table.insert(servers, "csharp_ls")
+end
+vim.lsp.enable(servers)
