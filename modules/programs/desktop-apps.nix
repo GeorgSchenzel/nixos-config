@@ -11,6 +11,7 @@
         jetbrains.pycharm
         jetbrains.idea
         qbittorrent
+        signal-desktop
       ] ++ lib.optionals pkgs.stdenv.isDarwin [
         iina
       ];
@@ -28,6 +29,15 @@
         ".thunderbird"
         ".config/Code"
       ];
+    };
+
+    darwin = {
+      homebrew = {
+        enable = true;
+        casks = [
+          "google-chrome"
+        ];
+      };
     };
   };
 }
