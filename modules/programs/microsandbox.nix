@@ -2,7 +2,18 @@
 
 {
   perSystem = { pkgs, system, ... }: {
-    packages.msb = lib.mkIf (system == "x86_64-linux" || system == "aarch64-darwin") (pkgs.stdenv.mkDerivation (finalAttrs: {
+    packages.msb = let
+      entitlements = pkgs.writeText "msb-entitlements.plist" ''
+        <?xml version="1.0" encoding="UTF-8"?>
+        <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+        <plist version="1.0">
+        <dict>
+          <key>com.apple.security.cs.disable-library-validation</key><true/>
+          <key>com.apple.security.hypervisor</key><true/>
+        </dict>
+        </plist>
+      '';
+    in lib.mkIf (system == "x86_64-linux" || system == "aarch64-darwin") (pkgs.stdenv.mkDerivation (finalAttrs: {
       pname = "msb";
       version = "0.6.11";
 
@@ -19,7 +30,7 @@
       sourceRoot = ".";
 
       nativeBuildInputs = lib.optionals pkgs.stdenv.hostPlatform.isLinux [ pkgs.autoPatchelfHook ]
-        ++ lib.optionals pkgs.stdenv.hostPlatform.isDarwin [ pkgs.makeBinaryWrapper ];
+        ++ lib.optionals pkgs.stdenv.hostPlatform.isDarwin [ pkgs.makeBinaryWrapper pkgs.darwin.sigtool ];
       buildInputs = lib.optionals pkgs.stdenv.hostPlatform.isLinux [
         pkgs.libcap_ng
         pkgs.libgcc
@@ -50,6 +61,19 @@
         dylib=("$out"/lib/libkrunfw.*.dylib)
         makeBinaryWrapper $out/bin/.msb-unwrapped $out/bin/msb \
           --set MSB_LIBKRUNFW_PATH "''${dylib[0]}"
+      '';
+
+      # Sign in postFixup, not postInstall: fixupPhase strips binaries and
+      # the darwin auto-signer re-signs everything adhoc, wiping any earlier
+      # signature. macOS <= 14 requires com.apple.security.hypervisor for
+      # Hypervisor.framework (hv_vcpu_create); macOS 15 dropped the
+      # requirement but the entitlement stays harmless. Library validation
+      # must be off for the adhoc libkrunfw to load alongside the entitled
+      # binary. Upstream ships both entitlements; this restores them.
+      postFixup = lib.optionalString pkgs.stdenv.hostPlatform.isDarwin ''
+        dylib=("$out"/lib/libkrunfw.*.dylib)
+        codesign --force --sign - --entitlements ${entitlements} $out/bin/.msb-unwrapped
+        codesign --force --sign - "''${dylib[0]}"
       '';
 
       meta = {
