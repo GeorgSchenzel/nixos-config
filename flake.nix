@@ -10,6 +10,10 @@
     };
     den.url = "github:vic/den";
     disko.url = "github:nix-community/disko";
+    doubt-nvim = {
+      url = "github:makefinks/doubt.nvim";
+      flake = false;
+    };
     flake-file.url = "github:vic/flake-file";
     flake-parts = {
       url = "github:hercules-ci/flake-parts";

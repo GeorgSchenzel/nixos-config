@@ -53,6 +53,22 @@
         "type": "github"
       }
     },
+    "doubt-nvim": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1786264694,
+        "narHash": "sha256-Y9P08XPDiJPkU7/LgR2EI3+HuSI1jVUjwEYsgAIpd/o=",
+        "owner": "makefinks",
+        "repo": "doubt.nvim",
+        "rev": "116962545e9ec79da71b1379d3e233120a7c32b9",
+        "type": "github"
+      },
+      "original": {
+        "owner": "makefinks",
+        "repo": "doubt.nvim",
+        "type": "github"
+      }
+    },
     "flake-file": {
       "locked": {
         "lastModified": 1785282747,
@@ -285,6 +301,7 @@
         "darwin": "darwin",
         "den": "den",
         "disko": "disko",
+        "doubt-nvim": "doubt-nvim",
         "flake-file": "flake-file",
         "flake-parts": "flake-parts",
         "herdr": "herdr",

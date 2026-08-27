@@ -6,6 +6,11 @@
     inputs.nixpkgs.follows = "nixpkgs";
   };
 
+  flake-file.inputs.doubt-nvim = {
+    url = "github:makefinks/doubt.nvim";
+    flake = false;
+  };
+
   den.aspects.neovim = {
     os = { pkgs, ... }: {
       environment.variables = {
@@ -38,7 +43,14 @@
             blink            = blink-cmp;
             friendly-snippets = friendly-snippets;
             gitsigns         = gitsigns-nvim;
+            diffview         = diffview-nvim;
             yazi             = yazi-nvim;
+            nui              = nui-nvim;
+            doubt            = pkgs.vimUtils.buildVimPlugin {
+              pname = "doubt.nvim";
+              version = "0-unstable-2026-08-09";
+              src = inputs.doubt-nvim;
+            };
           };
           runtimePkgs = with pkgs; [
             ripgrep fd yazi lazygit
