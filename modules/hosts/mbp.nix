@@ -12,7 +12,8 @@
       den.aspects.ai-tools
       den.aspects.desktop-apps
       den.aspects.podman
-      den.aspects.yabai
+      den.aspects.aerospace
+      den.aspects.keybinds
       den.aspects.neovim
       den.aspects.microsandbox
     ];
