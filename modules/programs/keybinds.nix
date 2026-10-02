@@ -53,6 +53,44 @@
                     }
                   ];
                 }
+                # Keyboard is misdetected as ANSI, so the ISO <> key and the
+                # ^° key (grave_accent_and_tilde) report swapped key codes.
+                # Excluded for the silakka54 split (vendor 0xFEED): it sends
+                # correct PC/ISO usages and is typed ISO in macOS, so the
+                # swap would double-remap it.
+                {
+                  description = "Swap <> and ^° keys (fix ANSI/ISO mismatch)";
+                  manipulators = [
+                    {
+                      type = "basic";
+                      from = {
+                        key_code = "grave_accent_and_tilde";
+                        modifiers.optional = [ "any" ];
+                      };
+                      to = [ { key_code = "non_us_backslash"; } ];
+                      conditions = [
+                        {
+                          type = "device_unless";
+                          identifiers = [ { vendor_id = 65261; } ];
+                        }
+                      ];
+                    }
+                    {
+                      type = "basic";
+                      from = {
+                        key_code = "non_us_backslash";
+                        modifiers.optional = [ "any" ];
+                      };
+                      to = [ { key_code = "grave_accent_and_tilde"; } ];
+                      conditions = [
+                        {
+                          type = "device_unless";
+                          identifiers = [ { vendor_id = 65261; } ];
+                        }
+                      ];
+                    }
+                  ];
+                }
               ];
             }
           ];
