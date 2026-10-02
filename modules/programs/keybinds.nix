@@ -1,7 +1,9 @@
 { den, lib, ... }:
 
 {
-  # Per-host keyboard customization. Currently: caps = ctrl+alt (hold), esc (tap).
+  # Per-host keyboard customization. Currently: caps = ctrl+alt+cmd (hold),
+  # esc (tap) — same chord as the silakka54's WM thumb key (swap-invariant
+  # under macOS's ctrl↔cmd modifier swap).
   # The darwin part (Karabiner) applies wherever this aspect is included on a
   # mac; a future nixos part (e.g. services.keyd) can define different binds.
   den.aspects.keybinds = {
@@ -34,7 +36,7 @@
               selected = true;
               complex_modifications.rules = [
                 {
-                  description = "Caps Lock: hold = ctrl+alt, tap = escape";
+                  description = "Caps Lock: hold = ctrl+alt+cmd, tap = escape";
                   manipulators = [
                     {
                       type = "basic";
@@ -45,7 +47,7 @@
                       to = [
                         {
                           key_code = "left_control";
-                          modifiers = [ "left_option" ];
+                          modifiers = [ "left_option" "left_command" ];
                         }
                       ];
                       to_if_alone = [ { key_code = "escape"; } ];
