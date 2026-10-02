@@ -55,6 +55,43 @@
                     }
                   ];
                 }
+                # silakka54 only: HRM ctrl (f/j) acts as ⌘ for copy/paste
+                # etc. WM chord is left ctrl+alt+gui — the modifier set is
+                # invariant under this swap, so AeroSpace binds match either
+                # way.
+                {
+                  description = "Swap ctrl and cmd on silakka54";
+                  manipulators = [
+                    {
+                      type = "basic";
+                      from = {
+                        key_code = "left_control";
+                        modifiers.optional = [ "any" ];
+                      };
+                      to = [ { key_code = "left_command"; } ];
+                      conditions = [
+                        {
+                          type = "device_if";
+                          identifiers = [ { vendor_id = 65261; } ];
+                        }
+                      ];
+                    }
+                    {
+                      type = "basic";
+                      from = {
+                        key_code = "left_command";
+                        modifiers.optional = [ "any" ];
+                      };
+                      to = [ { key_code = "left_control"; } ];
+                      conditions = [
+                        {
+                          type = "device_if";
+                          identifiers = [ { vendor_id = 65261; } ];
+                        }
+                      ];
+                    }
+                  ];
+                }
                 # Keyboard is misdetected as ANSI, so the ISO <> key and the
                 # ^° key (grave_accent_and_tilde) report swapped key codes.
                 # Excluded for the silakka54 split (vendor 0xFEED): it sends
