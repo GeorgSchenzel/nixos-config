@@ -29,8 +29,9 @@
               hash = "sha256-rmHJt0PLR8BM5vsTBEQhBkbtD0DJU8d+4YVRhZYK+U8=";
             }} $out/vocab.txt
           '';
-          # Explicit path (not "auto" -> /run/user/<uid>) so i3status
-          # read_file can reference it without knowing the uid.
+          # Explicit path (not "auto" -> /run/user/<uid>) so external
+          # tools (e.g. the waybar dictation widget) can reference it
+          # without knowing the uid.
           stateFile = "${config.home.homeDirectory}/.cache/voxtype/state";
           mod = config.wayland.windowManager.sway.config.modifier;
         in
@@ -75,19 +76,6 @@
           # ~/.cache is wiped by impermanence on boot; ensure the
           # state dir exists before the daemon wants to write it.
           home.file.".cache/voxtype/.keep".text = "";
-
-          programs.i3status = {
-            enable = true;
-            general.interval = 2;
-            modules."read_file voxtype" = {
-              position = 9;
-              settings = {
-                path = stateFile;
-                format = "dictation: %content";
-                format_bad = "";
-              };
-            };
-          };
         }
       );
   };

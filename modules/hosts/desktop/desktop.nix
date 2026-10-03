@@ -22,6 +22,7 @@
       den.aspects.desktop-apps
       den.aspects.game-dev
       den.aspects.desktop-environment
+      den.aspects.waybar
       den.aspects.podman
       den.aspects.neovim
       den.aspects.microsandbox

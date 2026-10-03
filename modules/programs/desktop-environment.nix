@@ -197,6 +197,10 @@ in
               { app_id = "[Ss]atty"; }
             ];
 
+            # sway spawns a default bar when no bar block exists; an
+            # invisible one keeps swaybar out of the way for waybar.
+            bars = [ { mode = "invisible"; } ];
+
             colors = {
               focused = {
                 border = "#89b4fa";
