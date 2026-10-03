@@ -241,6 +241,9 @@ in
 
               "${modifier}+Shift+space" = "floating toggle";
 
+              "${modifier}+minus" = "scratchpad show";
+              "${modifier}+Shift+minus" = "move container to scratchpad";
+
               "${modifier}+Shift+d" = "exec ${menu}";
               "${modifier}+Shift+f" = "fullscreen";
               "${modifier}+Shift+r" = "mode resize";
