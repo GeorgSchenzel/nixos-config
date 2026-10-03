@@ -25,6 +25,8 @@
       den.aspects.podman
       den.aspects.neovim
       den.aspects.microsandbox
+      den.aspects.dictation
+      den.aspects.keybinds
     ];
 
     # host NixOS configuration

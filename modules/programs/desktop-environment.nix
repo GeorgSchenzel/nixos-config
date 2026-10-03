@@ -1,5 +1,9 @@
 { den, ... }:
 
+let
+  # Same chord as the mac (ctrl-alt-cmd): Ctrl + Alt (Mod1) + Super (Mod4).
+  mod = "Ctrl+Mod1+Mod4";
+in
 {
   den.aspects.desktop-environment = {
     nixos = { config, pkgs, ... }: {
@@ -49,6 +53,9 @@
         wlr.enable = true;
         extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
       };
+
+      services.udisks2.enable = true;
+      services.gvfs.enable = true;
 
       security.polkit.enable = true;
 
@@ -117,7 +124,7 @@
           xwayland = true;
 
           config = rec {
-            modifier = "Mod4";
+            modifier = mod;
             terminal = "alacritty";
             menu = "rofi -show drun";
 
@@ -159,6 +166,8 @@
               titlebar = false;
             };
 
+            # floating_modifier accepts a single modifier only, hence not ${mod}
+            floating.modifier = "Mod4";
             floating.criteria = [
               { app_id = "[Ss]atty"; }
             ];
@@ -202,24 +211,6 @@
               "${modifier}+Shift+k" = "move up";
               "${modifier}+Shift+l" = "move right";
 
-              "${modifier}+1" = "workspace number 1";
-              "${modifier}+2" = "workspace number 2";
-              "${modifier}+3" = "workspace number 3";
-              "${modifier}+4" = "workspace number 4";
-              "${modifier}+5" = "workspace number 5";
-              "${modifier}+6" = "workspace number 6";
-              "${modifier}+7" = "workspace number 7";
-              "${modifier}+8" = "workspace number 8";
-
-              "${modifier}+Shift+1" = "move container to workspace number 1, workspace number 1";
-              "${modifier}+Shift+2" = "move container to workspace number 2, workspace number 2";
-              "${modifier}+Shift+3" = "move container to workspace number 3, workspace number 3";
-              "${modifier}+Shift+4" = "move container to workspace number 4, workspace number 4";
-              "${modifier}+Shift+5" = "move container to workspace number 5, workspace number 5";
-              "${modifier}+Shift+6" = "move container to workspace number 6, workspace number 6";
-              "${modifier}+Shift+7" = "move container to workspace number 7, workspace number 7";
-              "${modifier}+Shift+8" = "move container to workspace number 8, workspace number 8";
-
               "${modifier}+b" = "splith";
               "${modifier}+v" = "splitv";
               "${modifier}+s" = "layout stacking";
@@ -259,11 +250,58 @@
             startup = [
               { command = "dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP=sway"; }
             ];
-
-            workspaceOutputAssign =
-              map (n: { workspace = toString n; output = "DP-2"; }) [ 1 2 3 4 ]
-              ++ map (n: { workspace = toString n; output = "HDMI-A-1"; }) [ 5 6 7 8 ];
           };
+
+          extraConfig = ''
+            set $mod ${mod}
+
+            ### workrooms: 5 rooms × 5 slots (11–55), commons 60–100
+            # NOTE: reload resets $workroom/$workspace to 1/1 (set lines re-run);
+            #       press mod+F after a reload. Daemon will re-sync later.
+
+            set $workroom 1
+            set $workspace 1
+            # $wsN constants are load-bearing: $$workroom1 would resolve as one
+            # variable name. The digit must come from a separate runtime expansion.
+            set $ws1 1
+            set $ws2 2
+            set $ws3 3
+            set $ws4 4
+            set $ws5 5
+
+            # commons — static, tool-independent
+            bindsym $mod+6 workspace number 60
+            bindsym $mod+7 workspace number 70
+            bindsym $mod+8 workspace number 80
+            bindsym $mod+9 workspace number 90
+            bindsym $mod+0 workspace number 100
+            bindsym $mod+Shift+6 move container to workspace number 60
+            bindsym $mod+Shift+7 move container to workspace number 70
+            bindsym $mod+Shift+8 move container to workspace number 80
+            bindsym $mod+Shift+9 move container to workspace number 90
+            bindsym $mod+Shift+0 move container to workspace number 100
+
+            # slot within current room; remember last visited slot (global, not per-room)
+            bindsym $mod+1 workspace number $$workroom$ws1; set $$workspace $ws1
+            bindsym $mod+2 workspace number $$workroom$ws2; set $$workspace $ws2
+            bindsym $mod+3 workspace number $$workroom$ws3; set $$workspace $ws3
+            bindsym $mod+4 workspace number $$workroom$ws4; set $$workspace $ws4
+            bindsym $mod+5 workspace number $$workroom$ws5; set $$workspace $ws5
+
+            # move focused window to slot in current room
+            bindsym $mod+Shift+1 move container to workspace number $$workroom$ws1
+            bindsym $mod+Shift+2 move container to workspace number $$workroom$ws2
+            bindsym $mod+Shift+3 move container to workspace number $$workroom$ws3
+            bindsym $mod+Shift+4 move container to workspace number $$workroom$ws4
+            bindsym $mod+Shift+5 move container to workspace number $$workroom$ws5
+
+            # room switch — lands on last-visited slot
+            bindsym $mod+F1 set $$workroom 1; workspace number $$workroom$$workspace
+            bindsym $mod+F2 set $$workroom 2; workspace number $$workroom$$workspace
+            bindsym $mod+F3 set $$workroom 3; workspace number $$workroom$$workspace
+            bindsym $mod+F4 set $$workroom 4; workspace number $$workroom$$workspace
+            bindsym $mod+F5 set $$workroom 5; workspace number $$workroom$$workspace
+          '';
         };
 
         home.sessionVariables = {

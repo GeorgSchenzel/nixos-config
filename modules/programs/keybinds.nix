@@ -5,8 +5,21 @@
   # esc (tap) — same chord as the silakka54's WM thumb key (swap-invariant
   # under macOS's ctrl↔cmd modifier swap).
   # The darwin part (Karabiner) applies wherever this aspect is included on a
-  # mac; a future nixos part (e.g. services.keyd) can define different binds.
+  # mac; the nixos part (keyd) applies on linux.
   den.aspects.keybinds = {
+    nixos = {
+      services.keyd = {
+        enable = true;
+        keyboards.default = {
+          ids = [ "*" ];
+          settings = {
+            main.capslock = "overload(hyper, esc)";
+            "hyper:C-M-A" = { };
+          };
+        };
+      };
+    };
+
     darwin =
       { pkgs, ... }:
       {
