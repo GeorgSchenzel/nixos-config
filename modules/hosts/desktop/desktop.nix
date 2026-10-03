@@ -28,6 +28,7 @@
       den.aspects.microsandbox
       den.aspects.dictation
       den.aspects.keybinds
+      den.aspects.logseq
     ];
 
     # host NixOS configuration
