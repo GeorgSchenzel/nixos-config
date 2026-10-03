@@ -69,7 +69,7 @@
           };
 
           wayland.windowManager.sway.extraConfig = ''
-            bindsym ${mod}+Shift+d exec ${pkgs.voxtype-onnx}/bin/voxtype record toggle
+            bindsym ${mod}+Shift+v exec ${pkgs.voxtype-onnx}/bin/voxtype record toggle
           '';
 
           # ~/.cache is wiped by impermanence on boot; ensure the

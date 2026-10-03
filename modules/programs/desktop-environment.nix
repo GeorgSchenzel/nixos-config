@@ -1,8 +1,33 @@
-{ den, ... }:
+{ den, lib, ... }:
 
 let
   # Same chord as the mac (ctrl-alt-cmd): Ctrl + Alt (Mod1) + Super (Mod4).
   mod = "Ctrl+Mod1+Mod4";
+
+  # 2D left-hand workspace grid; hjkl excluded (navigation).
+  grid = [
+    "1" "2" "3" "4" "5"
+    "q" "w" "e" "r" "t"
+    "a" "s" "d" "f" "g"
+    "y" "x" "c" "v" "b"
+  ];
+
+  workspaceBinds = lib.listToAttrs (map (k: {
+    name = "${mod}+${k}";
+    value = "workspace ${k}";
+  }) grid);
+
+  # keys inside the sticky move mode: Shift+grid moves the window,
+  # plain grid just switches workspace
+  moveBinds = lib.listToAttrs (map (k: {
+    name = "Shift+${k}";
+    value = "move container to workspace ${k}";
+  }) grid);
+
+  moveSwitchBinds = lib.listToAttrs (map (k: {
+    name = k;
+    value = "workspace ${k}";
+  }) grid);
 in
 {
   den.aspects.desktop-environment = {
@@ -189,12 +214,11 @@ in
               };
             };
 
+            # deliberately left unbound: reload, exit sway, layout
+            # stacking/tabbed/splits, focus parent, focus mode_toggle
             keybindings = {
               "${modifier}+Return" = "exec ${terminal}";
-              "${modifier}+d" = "exec ${menu}";
               "${modifier}+Shift+q" = "kill";
-              "${modifier}+Shift+c" = "reload";
-              "${modifier}+Shift+e" = "exec swaynag -t warning -m 'Exit sway?' -B 'Yes' 'swaymsg exit'";
 
               "${modifier}+h" = "focus left";
               "${modifier}+j" = "focus down";
@@ -211,18 +235,13 @@ in
               "${modifier}+Shift+k" = "move up";
               "${modifier}+Shift+l" = "move right";
 
-              "${modifier}+b" = "splith";
-              "${modifier}+v" = "splitv";
-              "${modifier}+s" = "layout stacking";
-              "${modifier}+w" = "layout tabbed";
-              "${modifier}+e" = "layout toggle split";
-
-              "${modifier}+f" = "fullscreen";
               "${modifier}+Shift+space" = "floating toggle";
-              "${modifier}+space" = "focus mode_toggle";
-              "${modifier}+a" = "focus parent";
 
-              "${modifier}+r" = "mode resize";
+              "${modifier}+Shift+d" = "exec ${menu}";
+              "${modifier}+Shift+f" = "fullscreen";
+              "${modifier}+Shift+r" = "mode resize";
+              "${modifier}+Shift+m" = "mode move";
+              "${modifier}+Shift+s" = "exec grim -g \"$(slurp)\" - | satty -f -";
 
               "XF86AudioRaiseVolume" = "exec wpctl set-volume -l 1.0 @DEFAULT_AUDIO_SINK@ 5%+";
               "XF86AudioLowerVolume" = "exec wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-";
@@ -231,7 +250,18 @@ in
 
               "Print" = "exec mkdir -p ~/Pictures/Screenshots && grim - | wl-copy";
               "Shift+Print" = "exec mkdir -p ~/Pictures/Screenshots && grim ~/Pictures/Screenshots/$(date -u +%Y-%m-%dT%H-%M-%SZ).png";
-              "${modifier}+Shift+s" = "exec grim -g \"$(slurp)\" - | satty -f -";
+            } // workspaceBinds // {
+              # drop home-manager's i3-style ws 6-10 defaults
+              "${modifier}+6" = null;
+              "${modifier}+7" = null;
+              "${modifier}+8" = null;
+              "${modifier}+9" = null;
+              "${modifier}+0" = null;
+              "${modifier}+Shift+6" = null;
+              "${modifier}+Shift+7" = null;
+              "${modifier}+Shift+8" = null;
+              "${modifier}+Shift+9" = null;
+              "${modifier}+Shift+0" = null;
             };
 
             modes.resize = {
@@ -247,61 +277,26 @@ in
               "Escape" = "mode default";
             };
 
+            # sticky: stays until Return/Escape; move several windows in a row
+            modes.move = moveBinds // moveSwitchBinds // {
+              "h" = "move left";
+              "j" = "move down";
+              "k" = "move up";
+              "l" = "move right";
+              "Left" = "move left";
+              "Down" = "move down";
+              "Up" = "move up";
+              "Right" = "move right";
+              "Return" = "mode default";
+              "Escape" = "mode default";
+            };
+
             startup = [
               { command = "dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP=sway"; }
             ];
+
+            workspaceAutoBackAndForth = true;
           };
-
-          extraConfig = ''
-            set $mod ${mod}
-
-            ### workrooms: 5 rooms × 5 slots (11–55), commons 60–100
-            # NOTE: reload resets $workroom/$workspace to 1/1 (set lines re-run);
-            #       press mod+F after a reload. Daemon will re-sync later.
-
-            set $workroom 1
-            set $workspace 1
-            # $wsN constants are load-bearing: $$workroom1 would resolve as one
-            # variable name. The digit must come from a separate runtime expansion.
-            set $ws1 1
-            set $ws2 2
-            set $ws3 3
-            set $ws4 4
-            set $ws5 5
-
-            # commons — static, tool-independent
-            bindsym $mod+6 workspace number 60
-            bindsym $mod+7 workspace number 70
-            bindsym $mod+8 workspace number 80
-            bindsym $mod+9 workspace number 90
-            bindsym $mod+0 workspace number 100
-            bindsym $mod+Shift+6 move container to workspace number 60
-            bindsym $mod+Shift+7 move container to workspace number 70
-            bindsym $mod+Shift+8 move container to workspace number 80
-            bindsym $mod+Shift+9 move container to workspace number 90
-            bindsym $mod+Shift+0 move container to workspace number 100
-
-            # slot within current room; remember last visited slot (global, not per-room)
-            bindsym $mod+1 workspace number $$workroom$ws1; set $$workspace $ws1
-            bindsym $mod+2 workspace number $$workroom$ws2; set $$workspace $ws2
-            bindsym $mod+3 workspace number $$workroom$ws3; set $$workspace $ws3
-            bindsym $mod+4 workspace number $$workroom$ws4; set $$workspace $ws4
-            bindsym $mod+5 workspace number $$workroom$ws5; set $$workspace $ws5
-
-            # move focused window to slot in current room
-            bindsym $mod+Shift+1 move container to workspace number $$workroom$ws1
-            bindsym $mod+Shift+2 move container to workspace number $$workroom$ws2
-            bindsym $mod+Shift+3 move container to workspace number $$workroom$ws3
-            bindsym $mod+Shift+4 move container to workspace number $$workroom$ws4
-            bindsym $mod+Shift+5 move container to workspace number $$workroom$ws5
-
-            # room switch — lands on last-visited slot
-            bindsym $mod+F1 set $$workroom 1; workspace number $$workroom$$workspace
-            bindsym $mod+F2 set $$workroom 2; workspace number $$workroom$$workspace
-            bindsym $mod+F3 set $$workroom 3; workspace number $$workroom$$workspace
-            bindsym $mod+F4 set $$workroom 4; workspace number $$workroom$$workspace
-            bindsym $mod+F5 set $$workroom 5; workspace number $$workroom$$workspace
-          '';
         };
 
         home.sessionVariables = {
