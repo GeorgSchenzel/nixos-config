@@ -28,6 +28,7 @@
         ".mozilla/firefox"
         ".thunderbird"
         ".config/Code"
+        ".config/obsidian"
       ];
     };
 
