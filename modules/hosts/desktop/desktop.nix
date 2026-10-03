@@ -29,6 +29,7 @@
       den.aspects.dictation
       den.aspects.keybinds
       den.aspects.logseq
+      den.aspects.photography
     ];
 
     # host NixOS configuration
