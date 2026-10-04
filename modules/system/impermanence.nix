@@ -29,6 +29,7 @@
             # home-level persists (host + exposed user quirks)
             home-manager.sharedModules = [{
                 home.persistence."/persist/home" = {
+                    hideMounts = true;
                     directories = lib.concatMap (f: f.directories or []) persist-home;
                     files = lib.concatMap (f: f.files or []) persist-home;
                 };
