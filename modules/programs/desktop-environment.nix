@@ -115,7 +115,11 @@ in
       security.pam.services.login.enableGnomeKeyring = true;
     };
 
-    persist-home.directories = [ ".local/share/keyrings" ];
+    persist-home = {
+      # rofi drun usage-history (drun sorts frequently-launched entries first)
+      files = [ ".cache/rofi3.druncache" ];
+      directories = [ ".local/share/keyrings" ];
+    };
 
     provides.to-users.homeManager = { pkgs, lib, config, ... }:
       lib.mkIf pkgs.stdenv.isLinux {
