@@ -8,11 +8,13 @@
     };
 
     # Unity editors + projects (downloaded by Hub), license file, Hub config.
+    # Note: the Hub uses lowercase XDG dirs (unityhub/unity3d).
     persist-home = {
       directories = [
         "Unity"
-        ".local/share/unity3d"
-        ".config/UnityHub"
+        ".config/unityhub"
+        ".config/unity3d"
+        ".local/share/unityhub"
       ];
     };
   };
