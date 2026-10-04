@@ -107,7 +107,15 @@ in
           };
         };
       };
+
+      # Secret Service (org.freedesktop.secrets) for libsecret clients
+      # (unity hub tokens, electron safeStorage). Unlocked at login via PAM.
+      services.gnome.gnome-keyring.enable = true;
+      security.pam.services.greetd.enableGnomeKeyring = true;
+      security.pam.services.login.enableGnomeKeyring = true;
     };
+
+    persist-home.directories = [ ".local/share/keyrings" ];
 
     provides.to-users.homeManager = { pkgs, lib, config, ... }:
       lib.mkIf pkgs.stdenv.isLinux {
