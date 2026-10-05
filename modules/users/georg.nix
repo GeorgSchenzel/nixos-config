@@ -3,6 +3,7 @@
   # user aspect
   den.aspects.georg = {
     includes = [
+      den.aspects.shell-aliases
       den.provides.define-user
       den.provides.primary-user
       (den.provides.user-shell "bash")
@@ -13,6 +14,10 @@
       { pkgs, ... }:
       {
         home.packages = [ pkgs.htop ];
+        # ~/.local/bin on PATH for every interactive shell (login or not):
+        # hm-session-vars.sh is sourced from ~/.bashrc, so terminals under
+        # sway (which never see /etc/profile) still get it.
+        home.sessionPath = [ "$HOME/.local/bin" ];
       };
 
     persist-home = {
