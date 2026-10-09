@@ -1,6 +1,12 @@
 { den, lib, ... }:
 
 let
+  # ⌃⌥⌘ instead of plain ⌥: on German (QWERTZ) layout, ⌥ composes special
+  # characters (@ [ ] { } | € ~ ...). AeroSpace binds are global hotkeys and
+  # would swallow those combos system-wide. The ⌘ bit keeps the chord
+  # invariant under the macOS ctrl↔cmd modifier swap (silakka54).
+  mod = "ctrl-alt-cmd";
+
   digits = map toString (lib.range 1 9);
   letters = [
     "A" "B" "C" "D" "E" "F" "G" "I" "M" "N" "O" "P"
@@ -8,16 +14,12 @@ let
   ];
   workspaces = digits ++ letters;
 
-  # ⌃⌥⌘ instead of plain ⌥: on German (QWERTZ) layout, ⌥ composes special
-  # characters (@ [ ] { } | € ~ ...). AeroSpace binds are global hotkeys and
-  # would swallow those combos system-wide. The ⌘ bit keeps the chord
-  # invariant under the macOS ctrl↔cmd modifier swap (silakka54).
   workspaceBinds = lib.listToAttrs (map (ws: {
-    name = "ctrl-alt-cmd-${lib.toLower ws}";
+    name = "${mod}-${lib.toLower ws}";
     value = "workspace ${ws}";
   }) workspaces);
   moveNodeBinds = lib.listToAttrs (map (ws: {
-    name = "ctrl-alt-cmd-shift-${lib.toLower ws}";
+    name = "${mod}-shift-${lib.toLower ws}";
     value = "move-node-to-workspace ${ws}";
   }) workspaces);
 in
@@ -114,22 +116,22 @@ in
           persistent-workspaces = workspaces;
 
           mode.main.binding = {
-            "ctrl-alt-cmd-enter" = "exec-and-forget open -na Ghostty";
-            "ctrl-alt-cmd-slash" = "layout tiles horizontal vertical";
-            "ctrl-alt-cmd-comma" = "layout accordion horizontal vertical";
-            "ctrl-alt-cmd-h" = "focus left";
-            "ctrl-alt-cmd-j" = "focus down";
-            "ctrl-alt-cmd-k" = "focus up";
-            "ctrl-alt-cmd-l" = "focus right";
-            "ctrl-alt-cmd-shift-h" = "move left";
-            "ctrl-alt-cmd-shift-j" = "move down";
-            "ctrl-alt-cmd-shift-k" = "move up";
-            "ctrl-alt-cmd-shift-l" = "move right";
-            "ctrl-alt-cmd-minus" = "resize smart -50";
-            "ctrl-alt-cmd-equal" = "resize smart +50";
-            "ctrl-alt-cmd-tab" = "workspace-back-and-forth";
-            "ctrl-alt-cmd-shift-tab" = "move-workspace-to-monitor --wrap-around next";
-            "ctrl-alt-cmd-shift-semicolon" = "mode service";
+            "${mod}-enter" = "exec-and-forget open -na Ghostty";
+            "${mod}-slash" = "layout tiles horizontal vertical";
+            "${mod}-comma" = "layout accordion horizontal vertical";
+            "${mod}-h" = "focus left";
+            "${mod}-j" = "focus down";
+            "${mod}-k" = "focus up";
+            "${mod}-l" = "focus right";
+            "${mod}-shift-h" = "move left";
+            "${mod}-shift-j" = "move down";
+            "${mod}-shift-k" = "move up";
+            "${mod}-shift-l" = "move right";
+            "${mod}-minus" = "resize smart -50";
+            "${mod}-equal" = "resize smart +50";
+            "${mod}-tab" = "workspace-back-and-forth";
+            "${mod}-shift-tab" = "move-workspace-to-monitor --wrap-around next";
+            "${mod}-shift-semicolon" = "mode service";
           } // workspaceBinds // moveNodeBinds;
 
           mode.service.binding = {
@@ -137,10 +139,10 @@ in
             r = [ "flatten-workspace-tree" "mode main" ];
             f = [ "layout floating tiling" "mode main" ];
             backspace = [ "close-all-windows-but-current" "mode main" ];
-            "ctrl-alt-cmd-shift-h" = [ "join-with left" "mode main" ];
-            "ctrl-alt-cmd-shift-j" = [ "join-with down" "mode main" ];
-            "ctrl-alt-cmd-shift-k" = [ "join-with up" "mode main" ];
-            "ctrl-alt-cmd-shift-l" = [ "join-with right" "mode main" ];
+            "${mod}-shift-h" = [ "join-with left" "mode main" ];
+            "${mod}-shift-j" = [ "join-with down" "mode main" ];
+            "${mod}-shift-k" = [ "join-with up" "mode main" ];
+            "${mod}-shift-l" = [ "join-with right" "mode main" ];
           };
         };
       };

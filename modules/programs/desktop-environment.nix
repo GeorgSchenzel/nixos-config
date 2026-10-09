@@ -1,5 +1,34 @@
-{ den, ... }:
+{ den, lib, ... }:
 
+let
+  # Same chord as the mac (ctrl-alt-cmd): Ctrl + Alt (Mod1) + Super (Mod4).
+  mod = "Ctrl+Mod1+Mod4";
+
+  # 2D left-hand workspace grid; hjkl excluded (navigation).
+  grid = [
+    "1" "2" "3" "4" "5"
+    "q" "w" "e" "r" "t"
+    "a" "s" "d" "f" "g"
+    "y" "x" "c" "v" "b"
+  ];
+
+  workspaceBinds = lib.listToAttrs (map (k: {
+    name = "${mod}+${k}";
+    value = "workspace ${k}";
+  }) grid);
+
+  # keys inside the sticky move mode: Shift+grid moves the window,
+  # plain grid just switches workspace
+  moveBinds = lib.listToAttrs (map (k: {
+    name = "Shift+${k}";
+    value = "move container to workspace ${k}";
+  }) grid);
+
+  moveSwitchBinds = lib.listToAttrs (map (k: {
+    name = k;
+    value = "workspace ${k}";
+  }) grid);
+in
 {
   den.aspects.desktop-environment = {
     nixos = { config, pkgs, ... }: {
@@ -49,6 +78,9 @@
         wlr.enable = true;
         extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
       };
+
+      services.udisks2.enable = true;
+      services.gvfs.enable = true;
 
       security.polkit.enable = true;
 
@@ -117,7 +149,7 @@
           xwayland = true;
 
           config = rec {
-            modifier = "Mod4";
+            modifier = mod;
             terminal = "alacritty";
             menu = "rofi -show drun";
 
@@ -159,9 +191,15 @@
               titlebar = false;
             };
 
+            # floating_modifier accepts a single modifier only, hence not ${mod}
+            floating.modifier = "Mod4";
             floating.criteria = [
               { app_id = "[Ss]atty"; }
             ];
+
+            # sway spawns a default bar when no bar block exists; an
+            # invisible one keeps swaybar out of the way for waybar.
+            bars = [ { mode = "invisible"; } ];
 
             colors = {
               focused = {
@@ -180,12 +218,11 @@
               };
             };
 
+            # deliberately left unbound: reload, exit sway, layout
+            # stacking/tabbed/splits, focus parent, focus mode_toggle
             keybindings = {
               "${modifier}+Return" = "exec ${terminal}";
-              "${modifier}+d" = "exec ${menu}";
               "${modifier}+Shift+q" = "kill";
-              "${modifier}+Shift+c" = "reload";
-              "${modifier}+Shift+e" = "exec swaynag -t warning -m 'Exit sway?' -B 'Yes' 'swaymsg exit'";
 
               "${modifier}+h" = "focus left";
               "${modifier}+j" = "focus down";
@@ -202,36 +239,16 @@
               "${modifier}+Shift+k" = "move up";
               "${modifier}+Shift+l" = "move right";
 
-              "${modifier}+1" = "workspace number 1";
-              "${modifier}+2" = "workspace number 2";
-              "${modifier}+3" = "workspace number 3";
-              "${modifier}+4" = "workspace number 4";
-              "${modifier}+5" = "workspace number 5";
-              "${modifier}+6" = "workspace number 6";
-              "${modifier}+7" = "workspace number 7";
-              "${modifier}+8" = "workspace number 8";
-
-              "${modifier}+Shift+1" = "move container to workspace number 1, workspace number 1";
-              "${modifier}+Shift+2" = "move container to workspace number 2, workspace number 2";
-              "${modifier}+Shift+3" = "move container to workspace number 3, workspace number 3";
-              "${modifier}+Shift+4" = "move container to workspace number 4, workspace number 4";
-              "${modifier}+Shift+5" = "move container to workspace number 5, workspace number 5";
-              "${modifier}+Shift+6" = "move container to workspace number 6, workspace number 6";
-              "${modifier}+Shift+7" = "move container to workspace number 7, workspace number 7";
-              "${modifier}+Shift+8" = "move container to workspace number 8, workspace number 8";
-
-              "${modifier}+b" = "splith";
-              "${modifier}+v" = "splitv";
-              "${modifier}+s" = "layout stacking";
-              "${modifier}+w" = "layout tabbed";
-              "${modifier}+e" = "layout toggle split";
-
-              "${modifier}+f" = "fullscreen";
               "${modifier}+Shift+space" = "floating toggle";
-              "${modifier}+space" = "focus mode_toggle";
-              "${modifier}+a" = "focus parent";
 
-              "${modifier}+r" = "mode resize";
+              "${modifier}+minus" = "scratchpad show";
+              "${modifier}+Shift+minus" = "move container to scratchpad";
+
+              "${modifier}+Shift+d" = "exec ${menu}";
+              "${modifier}+Shift+f" = "fullscreen";
+              "${modifier}+Shift+r" = "mode resize";
+              "${modifier}+Shift+m" = "mode move";
+              "${modifier}+Shift+s" = "exec grim -g \"$(slurp)\" - | satty -f -";
 
               "XF86AudioRaiseVolume" = "exec wpctl set-volume -l 1.0 @DEFAULT_AUDIO_SINK@ 5%+";
               "XF86AudioLowerVolume" = "exec wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-";
@@ -240,7 +257,18 @@
 
               "Print" = "exec mkdir -p ~/Pictures/Screenshots && grim - | wl-copy";
               "Shift+Print" = "exec mkdir -p ~/Pictures/Screenshots && grim ~/Pictures/Screenshots/$(date -u +%Y-%m-%dT%H-%M-%SZ).png";
-              "${modifier}+Shift+s" = "exec grim -g \"$(slurp)\" - | satty -f -";
+            } // workspaceBinds // {
+              # drop home-manager's i3-style ws 6-10 defaults
+              "${modifier}+6" = null;
+              "${modifier}+7" = null;
+              "${modifier}+8" = null;
+              "${modifier}+9" = null;
+              "${modifier}+0" = null;
+              "${modifier}+Shift+6" = null;
+              "${modifier}+Shift+7" = null;
+              "${modifier}+Shift+8" = null;
+              "${modifier}+Shift+9" = null;
+              "${modifier}+Shift+0" = null;
             };
 
             modes.resize = {
@@ -256,13 +284,25 @@
               "Escape" = "mode default";
             };
 
+            # sticky: stays until Return/Escape; move several windows in a row
+            modes.move = moveBinds // moveSwitchBinds // {
+              "h" = "move left";
+              "j" = "move down";
+              "k" = "move up";
+              "l" = "move right";
+              "Left" = "move left";
+              "Down" = "move down";
+              "Up" = "move up";
+              "Right" = "move right";
+              "Return" = "mode default";
+              "Escape" = "mode default";
+            };
+
             startup = [
               { command = "dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP=sway"; }
             ];
 
-            workspaceOutputAssign =
-              map (n: { workspace = toString n; output = "DP-2"; }) [ 1 2 3 4 ]
-              ++ map (n: { workspace = toString n; output = "HDMI-A-1"; }) [ 5 6 7 8 ];
+            workspaceAutoBackAndForth = true;
           };
         };
 

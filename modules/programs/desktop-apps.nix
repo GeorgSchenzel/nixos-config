@@ -12,6 +12,8 @@
         jetbrains.idea
         qbittorrent
         signal-desktop
+      ] ++ lib.optionals pkgs.stdenv.isLinux [
+        nautilus
       ] ++ lib.optionals pkgs.stdenv.isDarwin [
         iina
       ];
@@ -28,6 +30,7 @@
         ".mozilla/firefox"
         ".thunderbird"
         ".config/Code"
+        ".config/obsidian"
       ];
     };
 

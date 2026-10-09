@@ -35,6 +35,7 @@
                         "@persist_home" = { mountpoint = "/persist/home"; mountOptions = [ "compress=zstd" ]; };
                         "@persist_system" = { mountpoint = "/persist/system"; mountOptions = [ "compress=zstd" ]; };
                         "@persist_server" = { mountpoint = "/persist/server"; mountOptions = [ "compress=zstd" ]; };
+                        "@backups" = { mountpoint = "/backups"; mountOptions = [ "compress=zstd" ]; };
                         "@log" = { mountpoint = "/var/log"; mountOptions = [ "compress=zstd" ]; };
                         "@tmp" = { mountpoint = "/tmp"; mountOptions = [ "compress=zstd" ]; };
                         "@swap" = { mountpoint = "/swap"; mountOptions = [ "nodatacow" ]; swap.swapfile.size = "4G"; };

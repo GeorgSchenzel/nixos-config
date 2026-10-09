@@ -19,6 +19,7 @@
       directories = [
         "nixos-config"
         "hot"
+        "vaults"
       ];
     };
 
