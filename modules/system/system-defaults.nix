@@ -1,6 +1,9 @@
 { den, ... }:
 {
     den.aspects.system-defaults = {
-        console.keyMap = "de";
+        nixos = {
+            console.keyMap = "de";
+            environment.localBinInPath = true;
+        };
     };
 }
