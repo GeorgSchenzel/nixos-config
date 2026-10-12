@@ -16,6 +16,7 @@
       den.aspects.keybinds
       den.aspects.neovim
       den.aspects.microsandbox
+      den.aspects.brew
     ];
 
     # host NixOS configuration
