@@ -6,11 +6,12 @@
   flake-file.inputs.bento.url = "git+ssh://git@github.com/GeorgSchenzel/bento";
 
   den.aspects.ai-tools = {
-    provides.to-users.homeManager = { config, pkgs, ... }:
+    provides.to-users.homeManager = { config, pkgs, lib, ... }:
     {
       home.packages = [
         pkgs.lima
         pkgs.claude-code
+      ] ++ lib.optionals pkgs.stdenv.hostPlatform.isDarwin [
         inputs.bento.packages.${pkgs.stdenv.hostPlatform.system}.default
       ];
 
