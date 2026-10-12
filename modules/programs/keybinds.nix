@@ -1,5 +1,10 @@
 { den, lib, ... }:
 
+let
+  # Karabiner runs shell_command with a bare system PATH. Prefer a local dev
+  # build in ~/.cargo/bin, fall back to the nix-installed mise.
+  mise = cmd: ''PATH="$HOME/.cargo/bin:/etc/profiles/per-user/$USER/bin:/run/current-system/sw/bin:$PATH" mise ${cmd}'';
+in
 {
   # Per-host keyboard customization. Currently: caps = ctrl+alt+cmd (hold),
   # esc (tap) — same chord as the silakka54's WM thumb key (swap-invariant
@@ -57,11 +62,18 @@
                         key_code = "caps_lock";
                         modifiers.optional = [ "any" ];
                       };
+                      # mise overlay stays up while the WM modifier is held.
+                      # Only the last `to` event is held while caps is down,
+                      # so the chord goes last.
                       to = [
+                        { shell_command = mise "overlay show --close-on none"; }
                         {
                           key_code = "left_control";
                           modifiers = [ "left_option" "left_command" ];
                         }
+                      ];
+                      to_after_key_up = [
+                        { shell_command = mise "overlay hide"; }
                       ];
                       to_if_alone = [ { key_code = "escape"; } ];
                       parameters."basic.to_if_alone_timeout_milliseconds" = 300;
