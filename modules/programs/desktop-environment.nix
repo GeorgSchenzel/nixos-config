@@ -37,6 +37,10 @@ in
       hardware.graphics = {
         enable = true;
         enable32Bit = true;
+        # Puts libvulkan.so.1 into /run/opengl-driver/lib so the Unity Hub FHS
+        # env (and any other non-native binary) can initialize Vulkan instead
+        # of silently falling back to OpenGL Core.
+        extraPackages = [ pkgs.vulkan-loader ];
       };
 
       hardware.nvidia = {
@@ -55,6 +59,10 @@ in
         GBM_BACKEND = "nvidia-drm";
         __GLX_VENDOR_LIBRARY_NAME = "nvidia";
         NIXOS_OZONE_WL = "1";
+        # Point the Vulkan loader at the NVIDIA ICD. Necessary for FHS/sandboxed
+        # apps (Unity Hub/Editor) whose default ICD search paths don't include
+        # /run/opengl-driver/share.
+        VK_DRIVER_FILES = "/run/opengl-driver/share/vulkan/icd.d/nvidia_icd.json";
       };
 
       programs.sway = {
