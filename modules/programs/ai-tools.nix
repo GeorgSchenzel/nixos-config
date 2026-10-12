@@ -15,6 +15,11 @@
         inputs.bento.packages.${pkgs.stdenv.hostPlatform.system}.default
       ];
 
+      # Keep ~/.claude.json inside ~/.claude so a single persisted directory
+      # covers auth, history and settings. Claude rewrites .claude.json via
+      # atomic rename, which breaks on a bind-mounted single file.
+      home.sessionVariables.CLAUDE_CONFIG_DIR = "${config.home.homeDirectory}/.claude";
+
       programs.opencode = {
         enable = true;
         settings = {
@@ -57,6 +62,7 @@
       directories = [
         ".local/share/opencode"
         ".local/state/opencode"
+        ".claude"
       ];
     };
   };

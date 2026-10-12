@@ -49,6 +49,10 @@
                     assertion = builtins.any (d: d.directory == ".local/state/opencode") homeDirs;
                     message = ".local/state/opencode must be persisted for opencode state";
                 }
+                {
+                    assertion = builtins.any (d: d.directory == ".claude") homeDirs;
+                    message = ".claude must be persisted for claude code auth and history";
+                }
                 # desktop-apps
                 {
                     assertion = builtins.any (d: d.directory == ".mozilla/firefox") homeDirs;
