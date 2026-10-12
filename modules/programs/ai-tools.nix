@@ -3,11 +3,16 @@
 {
   flake-file.inputs.workmux.url = "github:raine/workmux";
   flake-file.inputs.herdr.url = "github:herdrdev/herdr/v0.8.0";
+  flake-file.inputs.bento.url = "git+ssh://git@github.com/GeorgSchenzel/bento";
 
   den.aspects.ai-tools = {
     provides.to-users.homeManager = { config, pkgs, ... }:
     {
-      home.packages = [ pkgs.lima ];
+      home.packages = [
+        pkgs.lima
+        pkgs.claude-code
+        inputs.bento.packages.${pkgs.stdenv.hostPlatform.system}.default
+      ];
 
       programs.opencode = {
         enable = true;
