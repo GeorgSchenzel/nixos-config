@@ -35,6 +35,9 @@
       sops.secrets = {
         zai-api-key = { };
         aqueduct-api-key = { };
+        "bento/claude-token" = {
+          path = "${config.home.homeDirectory}/.config/bento/claude-token";
+        };
       };
 
       sops.templates."opencode-auth.json" = {

@@ -24,8 +24,9 @@
     };
 
 
-    provides.to-users.homeManager = { config, ... }: {
+    provides.to-users.homeManager = { config, pkgs, ... }: {
       imports = [ inputs.sops-nix.homeManagerModules.sops ];
+      home.packages = [ pkgs.sops ];
       sops = {
         defaultSopsFile = ../../secrets/example.yaml;
         age.sshKeyPaths = [ "${config.home.homeDirectory}/.ssh/id_ed25519" ];
