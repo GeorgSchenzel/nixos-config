@@ -17,6 +17,7 @@
       den.aspects.cli-tools
       den.aspects.podman
       den.aspects.neovim
+      den.aspects.zellij
     ];
 
     nixos = { pkgs, ... }: {

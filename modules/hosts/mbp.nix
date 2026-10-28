@@ -10,12 +10,14 @@
       den.aspects.secrets
       den.aspects.cli-tools-desktop
       den.aspects.ai-tools
+      den.aspects.vibecoding
       den.aspects.desktop-apps
       den.aspects.podman
       den.aspects.aerospace
       den.aspects.keybinds
       den.aspects.neovim
       den.aspects.microsandbox
+      den.aspects.zellij
       den.aspects.brew
     ];
 

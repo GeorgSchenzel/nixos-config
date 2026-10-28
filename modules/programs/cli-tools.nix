@@ -42,7 +42,6 @@
         keyMode = "vi";
       };
 
-      programs.zellij.enable = true;
     };
   };
 }
