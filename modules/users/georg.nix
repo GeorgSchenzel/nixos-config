@@ -1,12 +1,12 @@
-{ den, ... }:
+{ den, lib, ... }:
 {
   # user aspect
-  den.aspects.georg = {
+  den.aspects.georg = { host, ... }: {
     includes = [
       den.aspects.shell-aliases
       den.provides.define-user
       den.provides.primary-user
-      (den.provides.user-shell "bash")
+      (den.provides.user-shell (if lib.hasSuffix "darwin" host.system then "zsh" else "bash"))
       # den._.host-aspects # allows host-aspects to fill homeManager by default, not used
     ];
 
