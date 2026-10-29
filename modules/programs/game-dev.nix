@@ -48,6 +48,8 @@
         "Unity"
         ".config/unityhub"
         ".config/unity3d"
+        # EditorPrefs (incl. the accepted "Terms-<hash>" key, layouts, prefs)
+        ".local/share/unity3d"
         ".local/share/unityhub"
       ];
     };
