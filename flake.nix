@@ -20,6 +20,7 @@
       url = "github:hercules-ci/flake-parts";
       inputs.nixpkgs-lib.follows = "nixpkgs";
     };
+    forest.url = "git+ssh://git@github.com/GeorgSchenzel/forest";
     herdr.url = "github:herdrdev/herdr/v0.8.0";
     home-manager = {
       url = "github:nix-community/home-manager";
@@ -32,6 +33,7 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     nixpkgs.url = "https://channels.nixos.org/nixpkgs-unstable/nixexprs.tar.xz";
+    ois.url = "git+ssh://git@github.com/GeorgSchenzel/ois";
     sops-nix = {
       url = "github:Mic92/sops-nix";
       inputs.nixpkgs.follows = "nixpkgs";

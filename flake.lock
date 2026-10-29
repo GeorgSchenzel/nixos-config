@@ -4,17 +4,15 @@
       "inputs": {
         "devenv": "devenv",
         "devenv-nixpkgs": "devenv-nixpkgs",
-        "mk-shell-bin": "mk-shell-bin",
-        "nix2container": "nix2container",
         "nixpkgs": "nixpkgs",
         "rust-overlay": "rust-overlay_2"
       },
       "locked": {
-        "lastModified": 1788274532,
-        "narHash": "sha256-4Fe5UuriAjjfJyIEDvWLNSZu4j4TetNVfNv52UNbWtE=",
+        "lastModified": 1793290224,
+        "narHash": "sha256-17b4A1+HAQ1qxqC9rAc6SkZcCI74s+M+NG6OxL8b2II=",
         "ref": "refs/heads/master",
-        "rev": "d46bbfb18b6e4a55c712c4e9147ca6013ca58b64",
-        "revCount": 11,
+        "rev": "1a54423974fb59fd2268652751eed7192e0d9f9e",
+        "revCount": 28,
         "type": "git",
         "url": "ssh://git@github.com/GeorgSchenzel/bento"
       },
@@ -268,6 +266,24 @@
         "type": "github"
       }
     },
+    "forest": {
+      "inputs": {
+        "nixpkgs": "nixpkgs_3"
+      },
+      "locked": {
+        "lastModified": 1793129681,
+        "narHash": "sha256-NQ6hUImBz3BlDN8NRqtHwgKStjFbCHaRL/Cc1O0mNrc=",
+        "ref": "refs/heads/master",
+        "rev": "ab5919dd745565b3cce37efa6e3d045b7b490b82",
+        "revCount": 16,
+        "type": "git",
+        "url": "ssh://git@github.com/GeorgSchenzel/forest"
+      },
+      "original": {
+        "type": "git",
+        "url": "ssh://git@github.com/GeorgSchenzel/forest"
+      }
+    },
     "ghostty": {
       "flake": false,
       "locked": {
@@ -313,7 +329,7 @@
     },
     "herdr": {
       "inputs": {
-        "nixpkgs": "nixpkgs_3",
+        "nixpkgs": "nixpkgs_4",
         "rust-overlay": "rust-overlay_3"
       },
       "locked": {
@@ -375,7 +391,7 @@
     "impermanence": {
       "inputs": {
         "home-manager": "home-manager_2",
-        "nixpkgs": "nixpkgs_4"
+        "nixpkgs": "nixpkgs_5"
       },
       "locked": {
         "lastModified": 1769548169,
@@ -403,21 +419,6 @@
       "original": {
         "owner": "vic",
         "repo": "import-tree",
-        "type": "github"
-      }
-    },
-    "mk-shell-bin": {
-      "locked": {
-        "lastModified": 1677004959,
-        "narHash": "sha256-/uEkr1UkJrh11vD02aqufCxtbF5YnhRTIKlx5kyvf+I=",
-        "owner": "rrbutani",
-        "repo": "nix-mk-shell-bin",
-        "rev": "ff5d8bd4d68a347be5042e2f16caee391cd75887",
-        "type": "github"
-      },
-      "original": {
-        "owner": "rrbutani",
-        "repo": "nix-mk-shell-bin",
         "type": "github"
       }
     },
@@ -484,27 +485,6 @@
       "original": {
         "owner": "BirdeeHub",
         "repo": "nix-wrapper-modules",
-        "type": "github"
-      }
-    },
-    "nix2container": {
-      "inputs": {
-        "nixpkgs": [
-          "bento",
-          "devenv-nixpkgs"
-        ]
-      },
-      "locked": {
-        "lastModified": 1775487831,
-        "narHash": "sha256-2lguQpLPQaxpQCJjXhmEEAfabwsAhkP29Z7fgLzHARA=",
-        "owner": "nlewo",
-        "repo": "nix2container",
-        "rev": "76be9608a7f4d6c985d28b0e7be903ae2547df3e",
-        "type": "github"
-      },
-      "original": {
-        "owner": "nlewo",
-        "repo": "nix2container",
         "type": "github"
       }
     },
@@ -587,6 +567,22 @@
     },
     "nixpkgs_3": {
       "locked": {
+        "lastModified": 1792842277,
+        "narHash": "sha256-pGPnZGi8y9d76xNeracniXO3dsYVROEmMkMc8jD0Ihc=",
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "d3b13ad75cc492690728f9307e443dec9ef9a20e",
+        "type": "github"
+      },
+      "original": {
+        "owner": "NixOS",
+        "ref": "nixpkgs-unstable",
+        "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
+    "nixpkgs_4": {
+      "locked": {
         "lastModified": 1779357205,
         "narHash": "sha256-cCO8aTqss5x9Ky8GWkpY0Hy5fyTZEbtifSUV8QjSzic=",
         "owner": "NixOS",
@@ -601,7 +597,7 @@
         "type": "github"
       }
     },
-    "nixpkgs_4": {
+    "nixpkgs_5": {
       "locked": {
         "lastModified": 1768564909,
         "narHash": "sha256-Kell/SpJYVkHWMvnhqJz/8DqQg2b6PguxVWOuadbHCc=",
@@ -617,7 +613,7 @@
         "type": "github"
       }
     },
-    "nixpkgs_5": {
+    "nixpkgs_6": {
       "locked": {
         "lastModified": 1791366222,
         "narHash": "sha256-/4ezBOv6aldGab7qTb6ls3SDpgzG8kuuSqEAA9zEZ8E=",
@@ -630,7 +626,23 @@
         "url": "https://channels.nixos.org/nixpkgs-unstable/nixexprs.tar.xz"
       }
     },
-    "nixpkgs_6": {
+    "nixpkgs_7": {
+      "locked": {
+        "lastModified": 1792842277,
+        "narHash": "sha256-pGPnZGi8y9d76xNeracniXO3dsYVROEmMkMc8jD0Ihc=",
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "d3b13ad75cc492690728f9307e443dec9ef9a20e",
+        "type": "github"
+      },
+      "original": {
+        "owner": "NixOS",
+        "ref": "nixpkgs-unstable",
+        "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
+    "nixpkgs_8": {
       "locked": {
         "lastModified": 1787900134,
         "narHash": "sha256-VYXO0XZlgj06dxJZRhrD3WoSsvq/c7+/Akyoa22pefw=",
@@ -646,6 +658,24 @@
         "type": "github"
       }
     },
+    "ois": {
+      "inputs": {
+        "nixpkgs": "nixpkgs_7"
+      },
+      "locked": {
+        "lastModified": 1793291863,
+        "narHash": "sha256-qOMqHM6wY4bwPV+/GK8Inx1kaWzG3zU/LMhg9PkzXsU=",
+        "ref": "refs/heads/master",
+        "rev": "d23e28303a4df878f120f6c7f45969a70f3a7a12",
+        "revCount": 69,
+        "type": "git",
+        "url": "ssh://git@github.com/GeorgSchenzel/ois"
+      },
+      "original": {
+        "type": "git",
+        "url": "ssh://git@github.com/GeorgSchenzel/ois"
+      }
+    },
     "root": {
       "inputs": {
         "bento": "bento",
@@ -655,12 +685,14 @@
         "doubt-nvim": "doubt-nvim",
         "flake-file": "flake-file",
         "flake-parts": "flake-parts_2",
+        "forest": "forest",
         "herdr": "herdr",
         "home-manager": "home-manager",
         "impermanence": "impermanence",
         "import-tree": "import-tree",
         "nix-wrapper-modules": "nix-wrapper-modules",
-        "nixpkgs": "nixpkgs_5",
+        "nixpkgs": "nixpkgs_6",
+        "ois": "ois",
         "sops-nix": "sops-nix",
         "workmux": "workmux"
       }
@@ -774,7 +806,7 @@
     },
     "workmux": {
       "inputs": {
-        "nixpkgs": "nixpkgs_6"
+        "nixpkgs": "nixpkgs_8"
       },
       "locked": {
         "lastModified": 1791143345,

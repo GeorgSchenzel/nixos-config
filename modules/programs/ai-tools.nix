@@ -43,6 +43,16 @@
       # atomic rename, which breaks on a bind-mounted single file.
       home.sessionVariables.CLAUDE_CONFIG_DIR = "${config.home.homeDirectory}/.claude";
 
+      # Share prompt history and session transcripts between both accounts.
+      # Auth (.claude.json), settings and live session state stay per-account.
+      # paste-cache holds pasted text referenced from history.jsonl.
+      home.file = lib.genAttrs
+        (map (name: ".claude-2/${name}") [ "history.jsonl" "projects" "file-history" "paste-cache" "plans" ])
+        (path: {
+          source = config.lib.file.mkOutOfStoreSymlink
+            "${config.home.homeDirectory}/.claude/${lib.removePrefix ".claude-2/" path}";
+        });
+
       programs.opencode = {
         enable = true;
         settings = {
@@ -91,6 +101,7 @@
         ".local/state/opencode"
         ".claude"
         ".claude-2"
+        ".local/share/bento"
       ];
     };
   };
