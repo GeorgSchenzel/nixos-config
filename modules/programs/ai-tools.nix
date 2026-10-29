@@ -11,6 +11,10 @@
       home.packages = [
         pkgs.lima
         pkgs.claude-code
+        (pkgs.writeShellScriptBin "claude2" ''
+          export CLAUDE_CONFIG_DIR="$HOME/.claude-2"
+          exec "${lib.getExe pkgs.claude-code}" "$@"
+        '')
       ] ++ lib.optionals pkgs.stdenv.hostPlatform.isDarwin [
         inputs.bento.packages.${pkgs.stdenv.hostPlatform.system}.default
       ];
@@ -66,6 +70,7 @@
         ".local/share/opencode"
         ".local/state/opencode"
         ".claude"
+        ".claude-2"
       ];
     };
   };
