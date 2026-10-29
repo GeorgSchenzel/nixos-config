@@ -12,16 +12,16 @@
         jetbrains.idea
         qbittorrent
         signal-desktop
-      ] ++ lib.optionals pkgs.stdenv.isLinux [
+      ] ++ lib.optionals pkgs.stdenv.hostPlatform.isLinux [
         nautilus
-      ] ++ lib.optionals pkgs.stdenv.isDarwin [
+      ] ++ lib.optionals pkgs.stdenv.hostPlatform.isDarwin [
         iina
       ];
 
       programs.alacritty.enable = true;
       programs.ghostty = {
         enable = true;
-        package = if pkgs.stdenv.isDarwin then pkgs.ghostty-bin else pkgs.ghostty;
+        package = if pkgs.stdenv.hostPlatform.isDarwin then pkgs.ghostty-bin else pkgs.ghostty;
       };
     };
 

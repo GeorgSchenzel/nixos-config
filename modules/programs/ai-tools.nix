@@ -15,9 +15,28 @@
           export CLAUDE_CONFIG_DIR="$HOME/.claude-2"
           exec "${lib.getExe pkgs.claude-code}" "$@"
         '')
-      ] ++ lib.optionals pkgs.stdenv.hostPlatform.isDarwin [
-        inputs.bento.packages.${pkgs.stdenv.hostPlatform.system}.default
-      ];
+      ] ++ lib.optionals pkgs.stdenv.hostPlatform.isDarwin (let
+        bento = inputs.bento.packages.${pkgs.stdenv.hostPlatform.system}.default;
+        # bento reads ~/.config/bento/claude-token itself; BENTO_CLAUDE_TOKEN
+        # takes precedence, so the second account only needs the env override.
+        # bento sets CLAUDE_CONFIG_DIR per box, so the host one doesn't matter.
+        bento2 = pkgs.writeShellScriptBin "bento2" ''
+          f="${config.sops.secrets."bento/claude-token-2".path}"
+          if [ -f "$f" ]; then
+            export BENTO_CLAUDE_TOKEN="$(<"$f")"
+          else
+            echo "bento2: token missing at $f (sops not activated?)" >&2
+          fi
+          exec "${lib.getExe bento}" "$@"
+        '';
+      in [
+        bento
+        bento2
+        # $HOME expands at runtime: nix only splices the literal into the script.
+        (pkgs.writeShellScriptBin "bento-dev" ''
+          exec "$HOME/.cargo/bin/bento" "$@"
+        '')
+      ]);
 
       # Keep ~/.claude.json inside ~/.claude so a single persisted directory
       # covers auth, history and settings. Claude rewrites .claude.json via
@@ -48,6 +67,7 @@
         "bento/claude-token" = {
           path = "${config.home.homeDirectory}/.config/bento/claude-token";
         };
+        "bento/claude-token-2" = { };
       };
 
       sops.templates."opencode-auth.json" = {

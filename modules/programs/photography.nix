@@ -4,7 +4,7 @@
     provides.to-users.homeManager = { pkgs, lib, ... }: {
       # rapidraw: GPU-accelerated non-destructive RAW editor (Tauri app).
       # Guarded so the aspect is safe to include on darwin later (no-op there).
-      home.packages = lib.optionals pkgs.stdenv.isLinux [ pkgs.rapidraw ];
+      home.packages = lib.optionals pkgs.stdenv.hostPlatform.isLinux [ pkgs.rapidraw ];
     };
 
     # Tauri app_data_dir: settings.json (export presets, custom lenses,

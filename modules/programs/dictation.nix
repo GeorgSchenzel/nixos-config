@@ -4,7 +4,7 @@
   den.aspects.dictation = {
     provides.to-users.homeManager =
       { pkgs, config, ... }:
-      lib.mkIf pkgs.stdenv.isLinux (
+      lib.mkIf pkgs.stdenv.hostPlatform.isLinux (
         let
           modelDir = pkgs.runCommand "parakeet-unified-en-0.6b-int8" { } ''
             mkdir -p $out

@@ -9,7 +9,7 @@
   den.aspects.waybar = {
     provides.to-users.homeManager =
       { pkgs, ... }:
-      lib.mkIf pkgs.stdenv.isLinux (
+      lib.mkIf pkgs.stdenv.hostPlatform.isLinux (
         let
           # plain bash files next to this module — no nix-string escaping
           workspaceGrid = pkgs.writeShellApplication {

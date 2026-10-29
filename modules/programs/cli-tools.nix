@@ -24,7 +24,7 @@
 
     provides.to-users.homeManager = { config, pkgs, lib, ... }: {
 
-      programs.nh = lib.mkIf pkgs.stdenv.isDarwin {
+      programs.nh = lib.mkIf pkgs.stdenv.hostPlatform.isDarwin {
         enable = true;
         clean.enable = true;
         clean.extraArgs = "--keep-since 4d --keep 3";

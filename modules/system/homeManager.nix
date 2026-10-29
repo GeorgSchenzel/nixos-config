@@ -11,7 +11,7 @@
         provides.to-users.homeManager = { config, pkgs, lib, ... }:
         {
             home.homeDirectory =
-                if pkgs.stdenv.isDarwin then
+                if pkgs.stdenv.hostPlatform.isDarwin then
                 (lib.mkForce "/Users/${user.userName}")
                 else
                 "/home/${user.userName}";

@@ -3,7 +3,8 @@
 {
   den.aspects.vibecoding = {
     os = {
-      # forest (worktree manager) shell integration; PATH order puts ~/.cargo/bin first
+      # forest (worktree manager) shell integration; prefers forest on PATH,
+      # falls back to a cargo build
       programs.zsh = {
         enable = true;
         interactiveShellInit = ''

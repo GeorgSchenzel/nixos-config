@@ -130,7 +130,7 @@ in
     };
 
     provides.to-users.homeManager = { pkgs, lib, config, ... }:
-      lib.mkIf pkgs.stdenv.isLinux {
+      lib.mkIf pkgs.stdenv.hostPlatform.isLinux {
         home.packages = with pkgs; [
           swaylock
           swayidle

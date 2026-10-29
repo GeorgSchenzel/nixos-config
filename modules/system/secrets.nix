@@ -27,6 +27,11 @@
     provides.to-users.homeManager = { config, pkgs, ... }: {
       imports = [ inputs.sops-nix.homeManagerModules.sops ];
       home.packages = [ pkgs.sops ];
+      # .sops.yaml lists ssh-to-age converted recipients; sops would treat
+      # ~/.ssh/id_ed25519 as an ssh identity (no match), and on darwin it looks
+      # for keys.txt under ~/Library. Derive the age key from the ssh key instead.
+      home.sessionVariables.SOPS_AGE_KEY_CMD =
+        "${pkgs.ssh-to-age}/bin/ssh-to-age -private-key -i ${config.home.homeDirectory}/.ssh/id_ed25519";
       sops = {
         defaultSopsFile = ../../secrets/example.yaml;
         age.sshKeyPaths = [ "${config.home.homeDirectory}/.ssh/id_ed25519" ];
