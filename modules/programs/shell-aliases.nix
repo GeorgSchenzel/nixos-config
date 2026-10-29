@@ -1,10 +1,18 @@
 { den, ... }:
 {
+  # included by user aspects; the plain homeManager class reaches the user
+  # on every host (provides.to-users is host-aspect semantics and would be dropped).
   den.aspects.shell-aliases = {
-    provides.to-users.homeManager = { pkgs, ... }: {
-      # generate ~/.bashrc so aliases land there; the generated rc sources
-      # hm-session-vars.sh itself, so sessionPath/sessionVariables still apply.
+    homeManager = { pkgs, ... }: {
+      # generate ~/.bashrc and ~/.zshrc so aliases land there; the generated
+      # rcs source hm-session-vars.sh themselves, so sessionPath/sessionVariables
+      # still apply in both shells.
       programs.bash.enable = true;
+      programs.zsh = {
+        enable = true;
+        autosuggestion.enable = true;
+        syntaxHighlighting.enable = true;
+      };
 
       # home.shellAliases (not programs.bash.shellAliases) so a future
       # zsh/fish switch picks these up automatically.

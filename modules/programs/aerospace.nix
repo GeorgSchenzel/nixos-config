@@ -111,6 +111,11 @@ in
               "if".app-id = "com.mitchellh.ghostty";
               run = "layout tiling";
             }
+            # Brain Rod exposes no bundle-id (NULL-APP-BUNDLE-ID), match on name
+            {
+              "if".app-name-regex-substring = "brain-rod";
+              run = "layout floating";
+            }
           ];
 
           persistent-workspaces = workspaces;

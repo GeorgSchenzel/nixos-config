@@ -19,6 +19,7 @@
       den.aspects.vm
       den.aspects.cli-tools-desktop
       den.aspects.ai-tools
+      den.aspects.vibecoding
       den.aspects.desktop-apps
       den.aspects.game-dev
       den.aspects.desktop-environment
@@ -30,6 +31,7 @@
       den.aspects.keybinds
       den.aspects.logseq
       den.aspects.photography
+      den.aspects.zellij
     ];
 
     # host NixOS configuration
