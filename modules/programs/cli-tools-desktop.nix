@@ -31,7 +31,7 @@
           url=$(git -C "$d" remote get-url origin 2>/dev/null | tr '[:upper:]' '[:lower:]')
           # local-only repos (no remotes at all) are mine too
           if [[ -z "$(git -C "$d" remote)" ]] ||
-             [[ "$url" =~ (^|[@/])(github\.com[:/]georgschenzel/|gitlab\.com[:/]georgschenzel/|gitlab\.tuwien\.ac\.at[:/]) ]]; then
+             [[ "$url" =~ (^|[@/])(github\.com[:/]georgschenzel/|gitlab\.com[:/]schenzelgeorg/|gitlab\.tuwien\.ac\.at[:/]) ]]; then
             (cd "$d" && devenv allow >/dev/null)
           fi
           return $s
