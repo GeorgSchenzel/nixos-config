@@ -39,6 +39,7 @@
 
     persist-home = {
       directories = [
+        ".local/share/zsh" # zsh history, see shell-aliases
         ".local/share/devenv" # `devenv allow` trust list, gc roots
       ];
       files = [

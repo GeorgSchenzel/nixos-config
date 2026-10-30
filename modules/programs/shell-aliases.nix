@@ -3,7 +3,7 @@
   # included by user aspects; the plain homeManager class reaches the user
   # on every host (provides.to-users is host-aspect semantics and would be dropped).
   den.aspects.shell-aliases = {
-    homeManager = { lib, pkgs, ... }: {
+    homeManager = { config, lib, pkgs, ... }: {
       # generate ~/.bashrc and ~/.zshrc so aliases land there; the generated
       # rcs source hm-session-vars.sh themselves, so sessionPath/sessionVariables
       # still apply in both shells.
@@ -12,6 +12,9 @@
         enable = true;
         autosuggestion.enable = true;
         syntaxHighlighting.enable = true;
+        # in a directory so it can be persisted: zsh saves history by
+        # rename, which fails on a bind-mounted single file
+        history.path = "${config.xdg.dataHome}/zsh/history";
 
         # call a ~/.cargo/bin build that is shadowed by a nix-profile one
         initContent = lib.mkAfter ''

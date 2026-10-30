@@ -76,6 +76,10 @@
                     assertion = builtins.any (f: f.file == ".bash_history") homeFiles;
                     message = ".bash_history must be persisted";
                 }
+                {
+                    assertion = builtins.any (d: d.directory == ".local/share/zsh") homeDirs;
+                    message = ".local/share/zsh must be persisted for zsh history";
+                }
             ];
         };
     };
