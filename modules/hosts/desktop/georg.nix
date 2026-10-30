@@ -8,8 +8,8 @@
                     # gitFull ships git-credential-libsecret in exec-path,
                     # which unity hub probes for token persistence.
                     package = pkgs.gitFull;
-                    userName = "Georg Schenzel";
-                    userEmail = "schenzel.georg@gmail.com";
+                    settings.user.name = "Georg Schenzel";
+                    settings.user.email = "schenzel.georg@gmail.com";
                 };
             };
         };

@@ -1,8 +1,6 @@
 { den, inputs, ... }:
 
 {
-  flake-file.inputs.workmux.url = "github:raine/workmux";
-  flake-file.inputs.herdr.url = "github:herdrdev/herdr/v0.8.0";
   flake-file.inputs.bento.url = "git+ssh://git@github.com/GeorgSchenzel/bento";
 
   den.aspects.ai-tools = {

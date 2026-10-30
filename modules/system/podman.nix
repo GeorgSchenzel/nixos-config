@@ -14,7 +14,7 @@
         defaultNetwork.settings.dns_enabled = true;
       };
 
-      virtualisation.containers.registries.search = [ "docker.io" "quay.io" "ghcr.io" ];
+      virtualisation.containers.registries.settings.unqualified-search-registries = [ "docker.io" "quay.io" "ghcr.io" ];
 
       users.users.georg.extraGroups = [ "podman" ];
     };
