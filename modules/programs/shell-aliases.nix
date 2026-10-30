@@ -18,6 +18,9 @@
 
         # call a ~/.cargo/bin build that is shadowed by a nix-profile one
         initContent = lib.mkAfter ''
+          # match the bash prompt: bold green [user@host:dir]
+          PROMPT=$'\n%B%F{green}[%n@%m:%~]$%f%b '
+
           dev() {
             [ $# -gt 0 ] || { echo "usage: dev <tool> [args...]" >&2; return 2; }
             local b="$HOME/.cargo/bin/$1"
