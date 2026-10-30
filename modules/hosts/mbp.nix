@@ -12,6 +12,7 @@
       den.aspects.ai-tools
       den.aspects.vibecoding
       den.aspects.ois
+      den.aspects.ois-remote
       den.aspects.desktop-apps
       den.aspects.podman
       den.aspects.aerospace
