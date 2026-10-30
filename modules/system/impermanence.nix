@@ -16,7 +16,7 @@
             ];
         };
         
-        nixos = { pkgs, persist-system, persist-home, ... }: {
+        nixos = { config, pkgs, persist-system, persist-home, ... }: {
             imports = [ inputs.impermanence.nixosModules.impermanence ];
 
             # minimum system level persists
@@ -35,6 +35,16 @@
                 };
             }];
 
+            # On a live switch, newly added persist mounts start only after
+            # home-manager has run, hiding the links it created underneath.
+            # RequiresMountsFor pulls the mounts in first, at boot and on switch.
+            # Paths are quoted since systemd splits this setting on whitespace.
+            systemd.services = lib.mapAttrs' (name: hm: lib.nameValuePair "home-manager-${name}" {
+                unitConfig.RequiresMountsFor = lib.concatMap
+                    (p: map (d: "\"${hm.home.homeDirectory}/${d.directory}\"") p.directories)
+                    (lib.attrValues hm.home.persistence);
+            }) config.home-manager.users;
+
             programs.fuse.userAllowOther = true;
 
             # rollback service
@@ -45,7 +55,6 @@
                 deviceUnit = "${lib.replaceStrings ["/dev/"] ["dev-"] host.btrfsPartition}.device";
             in
             {
-                enable = true;
                 services.rollback = {
                     description = "Rollback BTRFS root subvolume";
                     wantedBy = [ "initrd.target" ];
