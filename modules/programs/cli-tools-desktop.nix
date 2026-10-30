@@ -14,6 +14,11 @@
     };
 
     provides.to-users.homeManager = { pkgs, ... }: {
+      # native devenv auto-activation on cd (devenv >= 2.0, replaces direnv);
+      # projects must be trusted once with `devenv allow`
+      programs.zsh.initContent = ''eval "$(devenv hook zsh)"'';
+      programs.bash.initExtra = ''eval "$(devenv hook bash)"'';
+
       home.packages = with pkgs; [
         tika
         pdftk
@@ -33,6 +38,9 @@
     };
 
     persist-home = {
+      directories = [
+        ".local/share/devenv" # `devenv allow` trust list, gc roots
+      ];
       files = [
         ".bash_history"
       ];
