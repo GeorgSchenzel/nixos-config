@@ -29,15 +29,15 @@
                         type = "btrfs";
                         extraArgs = [ "-L" "nixos" ];
                         subvolumes = {
-                        "@" = { mountpoint = "/"; };
-                        "@home" = { mountpoint = "/home"; mountOptions = [ "compress=zstd" ]; };
-                        "@nix" = { mountpoint = "/nix"; mountOptions = [ "compress=zstd" "noatime" ]; };
-                        "@persist_home" = { mountpoint = "/persist/home"; mountOptions = [ "compress=zstd" ]; };
-                        "@persist_system" = { mountpoint = "/persist/system"; mountOptions = [ "compress=zstd" ]; };
-                        "@persist_server" = { mountpoint = "/persist/server"; mountOptions = [ "compress=zstd" ]; };
-                        "@backups" = { mountpoint = "/backups"; mountOptions = [ "compress=zstd" ]; };
-                        "@log" = { mountpoint = "/var/log"; mountOptions = [ "compress=zstd" ]; };
-                        "@tmp" = { mountpoint = "/tmp"; mountOptions = [ "compress=zstd" ]; };
+                        "@" = { mountpoint = "/"; mountOptions = [ "compress=zstd:1" ]; };
+                        "@home" = { mountpoint = "/home"; mountOptions = [ "compress=zstd:1" ]; };
+                        "@nix" = { mountpoint = "/nix"; mountOptions = [ "compress=zstd:1" "noatime" ]; };
+                        "@persist_home" = { mountpoint = "/persist/home"; mountOptions = [ "compress=zstd:1" ]; };
+                        "@persist_system" = { mountpoint = "/persist/system"; mountOptions = [ "compress=zstd:1" ]; };
+                        "@persist_server" = { mountpoint = "/persist/server"; mountOptions = [ "compress=zstd:1" ]; };
+                        "@backups" = { mountpoint = "/backups"; mountOptions = [ "compress=zstd:1" ]; };
+                        "@log" = { mountpoint = "/var/log"; mountOptions = [ "compress=zstd:1" ]; };
+                        "@tmp" = { mountpoint = "/tmp"; mountOptions = [ "compress=zstd:1" ]; };
                         "@swap" = { mountpoint = "/swap"; mountOptions = [ "nodatacow" ]; swap.swapfile.size = "4G"; };
                         };
                     };
