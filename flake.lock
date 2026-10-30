@@ -8,11 +8,11 @@
         "rust-overlay": "rust-overlay_2"
       },
       "locked": {
-        "lastModified": 1793290224,
-        "narHash": "sha256-17b4A1+HAQ1qxqC9rAc6SkZcCI74s+M+NG6OxL8b2II=",
+        "lastModified": 1793385398,
+        "narHash": "sha256-UM/DnDXV+wlOVQOR9EbboJ0tXse6rE/XNeVreTS+fzs=",
         "ref": "refs/heads/master",
-        "rev": "1a54423974fb59fd2268652751eed7192e0d9f9e",
-        "revCount": 28,
+        "rev": "28b0523510a49b88f228c519d1f775f230448352",
+        "revCount": 30,
         "type": "git",
         "url": "ssh://git@github.com/GeorgSchenzel/bento"
       },

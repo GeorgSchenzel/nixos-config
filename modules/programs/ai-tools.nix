@@ -13,7 +13,7 @@
           export CLAUDE_CONFIG_DIR="$HOME/.claude-2"
           exec "${lib.getExe pkgs.claude-code}" "$@"
         '')
-      ] ++ lib.optionals pkgs.stdenv.hostPlatform.isDarwin (let
+      ] ++ (let
         bento = inputs.bento.packages.${pkgs.stdenv.hostPlatform.system}.default;
         # bento reads ~/.config/bento/claude-token itself; BENTO_CLAUDE_TOKEN
         # takes precedence, so the second account only needs the env override.
