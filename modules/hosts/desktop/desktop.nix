@@ -33,6 +33,7 @@
       den.aspects.logseq
       den.aspects.photography
       den.aspects.zellij
+      den.aspects.yazi
     ];
 
     # host NixOS configuration

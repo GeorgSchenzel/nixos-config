@@ -57,7 +57,10 @@
             nil lua-language-server gopls basedpyright rust-analyzer
             typescript-language-server bash-language-server
             jdt-language-server
-          ] ++ lib.optionals (!pkgs.stdenv.hostPlatform.isDarwin) [ csharp-ls ];
+            # ueberzugpp: image previews for the yazi embedded in nvim
+            # (nvim's terminal supports no graphics protocol, so yazi falls
+            # back to the Wayland window-system protocol)
+          ] ++ lib.optionals (!pkgs.stdenv.hostPlatform.isDarwin) [ csharp-ls ueberzugpp ];
         };
       in
       {

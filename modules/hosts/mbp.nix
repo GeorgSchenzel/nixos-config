@@ -20,6 +20,7 @@
       den.aspects.neovim
       den.aspects.microsandbox
       den.aspects.zellij
+      den.aspects.yazi
       den.aspects.brew
     ];
 
