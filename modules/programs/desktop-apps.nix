@@ -2,6 +2,13 @@
 
 {
   den.aspects.desktop-apps = {
+    # ship the terminfo of common terminals (xterm-ghostty & co) system-wide;
+    # without it zsh line editing breaks in terminals whose $TERM has no
+    # terminfo entry (cursor overwrites text, broken completion)
+    nixos = {
+      environment.enableAllTerminfo = true;
+    };
+
     provides.to-users.homeManager = { pkgs, lib, ... }: {
       home.packages = with pkgs; [
         firefox

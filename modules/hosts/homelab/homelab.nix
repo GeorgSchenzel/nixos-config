@@ -21,7 +21,9 @@
     ];
 
     nixos = { pkgs, ... }: {
-      environment.systemPackages = [ ];
+      # xterm-ghostty & co: ssh clients carry their $TERM over, so the
+      # server needs matching terminfo entries for sane line editing
+      environment.enableAllTerminfo = true;
     };
 
     provides.to-users.homeManager = { pkgs, ... }: {
