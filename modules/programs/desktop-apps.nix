@@ -94,6 +94,12 @@
       programs.ghostty = {
         enable = true;
         package = if pkgs.stdenv.hostPlatform.isDarwin then pkgs.ghostty-bin else pkgs.ghostty;
+        settings = {
+          # selecting text copies straight to CLIPBOARD (Ctrl+Shift+V / GUI
+          # Ctrl+V), not just PRIMARY (middle-click); keeps the two clipboard
+          # selections from diverging. `true` would fill both instead.
+          copy-on-select = "clipboard";
+        };
       };
     };
 

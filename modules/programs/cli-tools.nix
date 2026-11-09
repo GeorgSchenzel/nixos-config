@@ -40,6 +40,14 @@
         enable = true;
         mouse = true;
         keyMode = "vi";
+        extraConfig = ''
+          # yanks in copy mode reach the system CLIPBOARD via OSC 52 (works
+          # over SSH too); needs a terminal that supports it — ghostty and
+          # alacritty both do
+          set -g set-clipboard on
+          set -as terminal-features ',xterm-ghostty:clipboard'
+          set -as terminal-features ',alacritty:clipboard'
+        '';
       };
 
     };
