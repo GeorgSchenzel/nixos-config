@@ -6,9 +6,9 @@ let
   mise = cmd: ''PATH="$HOME/.cargo/bin:/etc/profiles/per-user/$USER/bin:/run/current-system/sw/bin:$PATH" mise ${cmd}'';
 in
 {
-  # Per-host keyboard customization. Currently: caps = ctrl+alt+cmd (hold),
-  # esc (tap) — same chord as the silakka54's WM thumb key (swap-invariant
-  # under macOS's ctrl↔cmd modifier swap).
+  # Per-host keyboard customization. Currently: caps = ctrl+alt+cmd (hold
+  # only; a tap does nothing) — same chord as the silakka54's WM thumb key
+  # (swap-invariant under macOS's ctrl↔cmd modifier swap).
   # The darwin part (Karabiner) applies wherever this aspect is included on a
   # mac; the nixos part (keyd) applies on linux.
   den.aspects.keybinds = {
@@ -18,7 +18,8 @@ in
         keyboards.default = {
           ids = [ "*" ];
           settings = {
-            main.capslock = "overload(hyper, esc)";
+            # hold caps for the hyper chord; tap does nothing
+            main.capslock = "layer(hyper)";
             "hyper:C-M-A" = { };
           };
         };
@@ -54,7 +55,7 @@ in
               selected = true;
               complex_modifications.rules = [
                 {
-                  description = "Caps Lock: hold = ctrl+alt+cmd, tap = escape";
+                  description = "Caps Lock: hold = ctrl+alt+cmd";
                   manipulators = [
                     {
                       type = "basic";
@@ -75,8 +76,6 @@ in
                       to_after_key_up = [
                         { shell_command = mise "overlay hide"; }
                       ];
-                      to_if_alone = [ { key_code = "escape"; } ];
-                      parameters."basic.to_if_alone_timeout_milliseconds" = 300;
                     }
                   ];
                 }
