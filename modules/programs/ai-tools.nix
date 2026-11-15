@@ -6,6 +6,31 @@
   den.aspects.ai-tools = {
     provides.to-users.homeManager = { config, pkgs, lib, ... }:
     {
+      # bento via its home-manager module: puts bento on PATH and lets
+      # stew's services.stew pick the package up for its units (extraPackages).
+      # The wok channel points boxes at the GPU job daemon (wok aspect);
+      # git hosts get the token files from the vault; claude reads its
+      # token from the default sops path, opencode the shared auth.json.
+      imports = [ inputs.bento.homeManagerModules.bento ];
+
+      programs.bento = {
+        enable = true;
+        settings.channels.wok.socket = "~/.local/share/wok/wok.sock";
+        # box tools follow the flake inputs, so `nix flake update` updates them
+        settings.tools.wok = "github:GeorgSchenzel/wok/${inputs.wok.rev}#wok";
+        git = {
+          "github.com" = config.sops.secrets."git/github-com".path;
+          "gitlab.com" = config.sops.secrets."git/gitlab-com".path;
+        };
+        agents.claude = {
+          enable = true;
+          tokenFile = config.sops.secrets."bento/claude-token".path;
+          tool = "github:NixOS/nixpkgs/${inputs.nixpkgs.rev}#claude-code";
+        };
+        agents.opencode.enable = true; # authFile defaults to ~/.local/share/opencode/auth.json
+        agents.opencode.tool = "github:NixOS/nixpkgs/${inputs.nixpkgs.rev}#opencode";
+      };
+
       home.packages = [
         pkgs.lima
         pkgs.claude-code
@@ -13,28 +38,26 @@
           export CLAUDE_CONFIG_DIR="$HOME/.claude-2"
           exec "${lib.getExe pkgs.claude-code}" "$@"
         '')
-      ] ++ (let
-        bento = inputs.bento.packages.${pkgs.stdenv.hostPlatform.system}.default;
-        # bento reads ~/.config/bento/claude-token itself; BENTO_CLAUDE_TOKEN
-        # takes precedence, so the second account only needs the env override.
-        # bento sets CLAUDE_CONFIG_DIR per box, so the host one doesn't matter.
-        bento2 = pkgs.writeShellScriptBin "bento2" ''
+      ] ++ [
+        # the second account's claude token, via bento core's -e passthrough:
+        # bento claude/opencode let CLAUDE_CODE_OAUTH_TOKEN beat tokenFile.
+        # bento2 exec <box> -- claude doesn't pass it on its own — use
+        # `bento2 exec <box> -e CLAUDE_CODE_OAUTH_TOKEN -- claude`. A missing
+        # token exits 125 instead of falling back to the first account.
+        (pkgs.writeShellScriptBin "bento2" ''
           f="${config.sops.secrets."bento/claude-token-2".path}"
-          if [ -f "$f" ]; then
-            export BENTO_CLAUDE_TOKEN="$(<"$f")"
-          else
+          if [ ! -r "$f" ]; then
             echo "bento2: token missing at $f (sops not activated?)" >&2
+            exit 125
           fi
-          exec "${lib.getExe bento}" "$@"
-        '';
-      in [
-        bento
-        bento2
+          export CLAUDE_CODE_OAUTH_TOKEN="$(<"$f")"
+          exec "${lib.getExe config.programs.bento.package}" "$@"
+        '')
         # $HOME expands at runtime: nix only splices the literal into the script.
         (pkgs.writeShellScriptBin "bento-dev" ''
           exec "$HOME/.cargo/bin/bento" "$@"
         '')
-      ]);
+      ];
 
       # Keep ~/.claude.json inside ~/.claude so a single persisted directory
       # covers auth, history and settings. Claude rewrites .claude.json via
@@ -72,9 +95,8 @@
       sops.secrets = {
         zai-api-key = { };
         aqueduct-api-key = { };
-        "bento/claude-token" = {
-          path = "${config.home.homeDirectory}/.config/bento/claude-token";
-        };
+        # default sops path: programs.bento's agents.claude.tokenFile reads it
+        "bento/claude-token" = { };
         "bento/claude-token-2" = { };
       };
 

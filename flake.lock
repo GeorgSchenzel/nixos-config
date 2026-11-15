@@ -8,11 +8,11 @@
         "rust-overlay": "rust-overlay_2"
       },
       "locked": {
-        "lastModified": 1793393637,
-        "narHash": "sha256-pebW5nedJfwDIInLckqa8Y7rQTzOeEt1PQ5GcrLwRJ4=",
+        "lastModified": 1794737897,
+        "narHash": "sha256-dbbrc2gv24eHbpzjnLg+1oK9OPbVZtVJ7UTnK4u0gqI=",
         "ref": "refs/heads/master",
-        "rev": "a1cbce8b256baa7a1147fd93200cc45f01902fbd",
-        "revCount": 31,
+        "rev": "1833353f23e24317707357c4536818b2f947131c",
+        "revCount": 41,
         "type": "git",
         "url": "ssh://git@github.com/GeorgSchenzel/bento"
       },
@@ -745,11 +745,11 @@
         "nixpkgs": "nixpkgs_7"
       },
       "locked": {
-        "lastModified": 1794729332,
-        "narHash": "sha256-iowpPGkbepN23EqvsYv+jKBh5BpMYJJ0ptOJDaWORZw=",
+        "lastModified": 1794742766,
+        "narHash": "sha256-f2p9p/I9yJFL5/7FS7H816ZrAuTZIXBBB4lyZSRtGnQ=",
         "ref": "refs/heads/master",
-        "rev": "a52d4caaab0ecbbc74e46013fdfcf0ff96bd6812",
-        "revCount": 8,
+        "rev": "84521473f33dd437f30bcf3cad6013494fee19db",
+        "revCount": 12,
         "type": "git",
         "url": "ssh://git@github.com/GeorgSchenzel/stew"
       },
@@ -786,11 +786,11 @@
         "nixpkgs": "nixpkgs_8"
       },
       "locked": {
-        "lastModified": 1794730158,
-        "narHash": "sha256-nn9b8wTc1KXS5oe9QS32iPvFmNH4esJuGIjQYKkORH4=",
+        "lastModified": 1794743450,
+        "narHash": "sha256-dPyfmbdSzvam6XHnpCQD2Ae5WdOiOLgTvJXDEEUuRRM=",
         "ref": "refs/heads/master",
-        "rev": "2dc4c62611596ee30852ad881bedf26fff2d545c",
-        "revCount": 6,
+        "rev": "46fd2695dc726abf2b2f91f4e76d8a4ae2c26963",
+        "revCount": 7,
         "type": "git",
         "url": "ssh://git@github.com/GeorgSchenzel/wok"
       },
