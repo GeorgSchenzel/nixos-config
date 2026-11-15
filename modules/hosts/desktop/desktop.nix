@@ -20,6 +20,8 @@
       den.aspects.cli-tools-desktop
       den.aspects.ai-tools
       den.aspects.vibecoding
+      den.aspects.stew
+      den.aspects.wok
       den.aspects.ois-remote
       den.aspects.desktop-apps
       den.aspects.game-dev

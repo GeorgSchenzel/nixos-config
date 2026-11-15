@@ -37,5 +37,7 @@
       url = "github:Mic92/sops-nix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    stew.url = "git+ssh://git@github.com/GeorgSchenzel/stew";
+    wok.url = "git+ssh://git@github.com/GeorgSchenzel/wok";
   };
 }

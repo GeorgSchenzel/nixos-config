@@ -61,12 +61,56 @@
         nodejs
         bun
         uv
+        # claude/agents run `python3` non-interactively, where shell aliases
+        # don't apply — provide a real interpreter; uv reuses it too
+        python3
         just
         jdk21
         maven
         quarkus
         glab
+        gh
       ];
+
+      # git host auth, independent of any agent tooling: one api-scoped
+      # fine-grained token per host in the vault (git/gitlab-com,
+      # git/github-com), rendered into the credential store (git over
+      # https, also what stew's normalized remotes use) and the CLI
+      # configs (MRs, comments). glab refuses anything but 0600.
+      sops.secrets = {
+        "git/gitlab-com" = { };
+        "git/github-com" = { };
+      };
+
+      sops.templates = {
+        "git-credentials" = {
+          path = "${config.home.homeDirectory}/.git-credentials";
+          mode = "0600";
+          content = ''
+            https://SchenzelGeorg:${config.sops.placeholder."git/gitlab-com"}@gitlab.com
+            https://GeorgSchenzel:${config.sops.placeholder."git/github-com"}@github.com
+          '';
+        };
+        "glab-config" = {
+          path = "${config.home.homeDirectory}/.config/glab-cli/config.yml";
+          mode = "0600";
+          content = ''
+            hosts:
+              gitlab.com:
+                token: ${config.sops.placeholder."git/gitlab-com"}
+          '';
+        };
+        "gh-hosts" = {
+          path = "${config.home.homeDirectory}/.config/gh/hosts.yml";
+          mode = "0600";
+          content = ''
+            github.com:
+                oauth_token: ${config.sops.placeholder."git/github-com"}
+                user: GeorgSchenzel
+                git_protocol: ssh
+          '';
+        };
+      };
     };
 
     persist-home = {

@@ -606,6 +606,38 @@
         "type": "github"
       }
     },
+    "nixpkgs_7": {
+      "locked": {
+        "lastModified": 1794495034,
+        "narHash": "sha256-E0hYoioqUtM2XmPPvYYpJgdADF5AW9oOoPSEiM9dTHQ=",
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "2074cc672349f14240fb7ea90d509e0b643e9dd4",
+        "type": "github"
+      },
+      "original": {
+        "owner": "NixOS",
+        "ref": "nixpkgs-unstable",
+        "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
+    "nixpkgs_8": {
+      "locked": {
+        "lastModified": 1794495034,
+        "narHash": "sha256-E0hYoioqUtM2XmPPvYYpJgdADF5AW9oOoPSEiM9dTHQ=",
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "2074cc672349f14240fb7ea90d509e0b643e9dd4",
+        "type": "github"
+      },
+      "original": {
+        "owner": "NixOS",
+        "ref": "nixpkgs-unstable",
+        "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
     "ois": {
       "inputs": {
         "nixpkgs": "nixpkgs_6"
@@ -640,7 +672,9 @@
         "nix-wrapper-modules": "nix-wrapper-modules",
         "nixpkgs": "nixpkgs_5",
         "ois": "ois",
-        "sops-nix": "sops-nix"
+        "sops-nix": "sops-nix",
+        "stew": "stew",
+        "wok": "wok"
       }
     },
     "rust-overlay": {
@@ -706,6 +740,24 @@
         "type": "github"
       }
     },
+    "stew": {
+      "inputs": {
+        "nixpkgs": "nixpkgs_7"
+      },
+      "locked": {
+        "lastModified": 1794729332,
+        "narHash": "sha256-iowpPGkbepN23EqvsYv+jKBh5BpMYJJ0ptOJDaWORZw=",
+        "ref": "refs/heads/master",
+        "rev": "a52d4caaab0ecbbc74e46013fdfcf0ff96bd6812",
+        "revCount": 8,
+        "type": "git",
+        "url": "ssh://git@github.com/GeorgSchenzel/stew"
+      },
+      "original": {
+        "type": "git",
+        "url": "ssh://git@github.com/GeorgSchenzel/stew"
+      }
+    },
     "treefmt-nix": {
       "inputs": {
         "nixpkgs": [
@@ -727,6 +779,24 @@
         "owner": "numtide",
         "repo": "treefmt-nix",
         "type": "github"
+      }
+    },
+    "wok": {
+      "inputs": {
+        "nixpkgs": "nixpkgs_8"
+      },
+      "locked": {
+        "lastModified": 1794730158,
+        "narHash": "sha256-nn9b8wTc1KXS5oe9QS32iPvFmNH4esJuGIjQYKkORH4=",
+        "ref": "refs/heads/master",
+        "rev": "2dc4c62611596ee30852ad881bedf26fff2d545c",
+        "revCount": 6,
+        "type": "git",
+        "url": "ssh://git@github.com/GeorgSchenzel/wok"
+      },
+      "original": {
+        "type": "git",
+        "url": "ssh://git@github.com/GeorgSchenzel/wok"
       }
     }
   },
